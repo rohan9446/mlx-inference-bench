@@ -62,10 +62,18 @@ chmod +x run_baseline.sh
 caffeinate -i ./run_baseline.sh 2>&1 | tee run_baseline.out
 ```
 
-Roughly 75 minutes, unattended. It runs a preflight probe and aborts before the
-sweeps if thinking suppression did not reach the request payload, starts and
-stops its own servers, records swap around every run, and writes a manifest with
-versions and the resolved model SHA.
+Roughly 75 minutes. It runs a preflight probe and aborts before the sweeps if
+thinking suppression did not reach the request payload, starts and stops its own
+servers, records swap around every run, and writes a manifest with versions and
+the resolved model SHA.
+
+**It is not fully unattended.** Fourteen of the fifteen runs complete on their
+own. The last one deliberately triggers a Metal OOM, and AIPerf does not recover
+after the server's generation thread dies — it hangs and needs Ctrl-C. There is
+no watchdog. Everything up to that point is written to disk, and `results.md` §6
+describes what the run establishes.
+
+The model revision is resolved and recorded, not pinned — see `results.md` §2.
 
 ## Layout
 
@@ -92,3 +100,4 @@ questions rather than planned work.
 4. Any future platform: pinned seed and model revision, an explicit thinking
    setting verified in the rendered payload, `--artifact-dir` per configuration,
    and a single-request dry run before any sweep.
+   
