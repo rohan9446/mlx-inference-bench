@@ -1,9 +1,10 @@
 # LLM Inference on Apple Silicon: M1 Baseline
 
 Measured characterization of `mlx_lm.server` serving Qwen3-0.6B on a MacBook Pro
-M1 (8GB unified memory). This document covers the Apple Silicon half of a
-planned three-way comparison (MLX on Apple Silicon / vLLM on NVIDIA). No NVIDIA
-data is included here yet.
+M1 (8GB unified memory). This is a preliminary Apple Silicon baseline for a
+planned cross-platform comparison against vLLM on NVIDIA. No NVIDIA data is
+included here yet, and see §2 for why these runs are not yet a valid comparison
+arm.
 
 All measurements: 2026-09-19.
 
@@ -35,10 +36,10 @@ NVIDIA runs happen.
 
 ---
 
-## 2. Frozen workload
+## 2. Workload specification and known deviations
 
-Anything in this section must be byte-identical on every machine in the
-comparison.
+The specification below is what every machine in the comparison must match.
+These runs deviate from it in three ways, documented at the end of this section.
 
 | Parameter | Value |
 |---|---|
@@ -73,13 +74,12 @@ This is a known defect in these runs, disclosed rather than corrected after the
 fact.
 
 The mechanism works. `mlx_lm` has no `--no-think` flag; thinking is suppressed
-through the chat template, on the CLI as
-`--chat-template-config '{"enable_thinking": false}'` and over HTTP as
-`{"chat_template_kwargs": {"enable_thinking": false}}`. Both were tested
-interactively and both behaved correctly.
+through the chat template. On `mlx_lm.server` (v0.31.3) the option is
+`--chat-template-args '{"enable_thinking": false}'`; over HTTP the per-request
+field is `{"chat_template_kwargs": {"enable_thinking": false}}`.
 
 **Neither was applied to the benchmark runs.** The server was started without
-`--chat-template-config`, and no AIPerf invocation passed
+`--chat-template-args`, and no AIPerf invocation passed
 `chat_template_kwargs`. The committed request payloads
 (`artifacts/*/inputs.json`) confirm it:
 
@@ -108,6 +108,33 @@ reasoning output; it does not suppress it. Suppression is
 `--default-chat-template-kwargs '{"enable_thinking": false}'` server-side, or
 `chat_template_kwargs` per request. Verify with a single request and commit the
 payload before collecting anything.
+
+### These runs are not yet a valid comparison arm
+
+Three deviations from the specification above, taken together:
+
+| Specified | As run |
+|---|---|
+| Thinking disabled | Thinking on (this section) |
+| Fixed seed | No `--random-seed` passed (§7.7) |
+| Pinned model revision | Loaded from `main` (§7.7) |
+
+The NVIDIA runs will be collected *with* all three applied. That makes them a
+different workload, not the same one, so this baseline cannot be set beside them
+and called a like-for-like comparison. Two ways forward, and this project takes
+the first:
+
+1. **Re-run the M1 baseline once** under the final frozen configuration —
+   thinking disabled, `--random-seed` set, model pinned to a commit SHA,
+   `--artifact-dir` per configuration. Roughly 45 minutes of machine time, and
+   it makes the comparison valid.
+2. Present the NVIDIA work as an independent follow-up benchmark rather than a
+   comparison.
+
+Until (1) happens, everything here is a preliminary characterization of MLX on
+M1, not one half of a controlled experiment. The findings in §3–§5 are about
+latency mechanics and are unaffected by the deviations; what the deviations
+block is the *comparison*, not the *measurements*.
 
 ---
 
@@ -225,8 +252,12 @@ That is the key observation: **prefill was already at its ceiling at
 concurrency 1.** There is no spare prefill capacity for added concurrency to
 exploit, so additional requests convert directly into TTFT.
 
-Net over the range: 8× concurrency buys 2.6× total output throughput, and
-essentially the entire latency cost lands in TTFT rather than ITL.
+Net over the range: 8× concurrency buys 2.6× total output throughput. TTFT
+degraded far more sharply in relative terms than ITL, 6.5× against 2.3×. In
+absolute terms both costs are real — at ~127 output tokens, the ITL increase
+adds roughly 3.9 s to each request's decode phase, against a 2.9 s increase in
+TTFT — so this is a difference in scaling behaviour, not a case of decode being
+free.
 
 **What this does not establish.** An earlier draft of this document claimed
 prompts are processed one at a time. That claim is withdrawn — it was inferred
@@ -444,8 +475,11 @@ Claims resting on uncommitted evidence are marked as such where they appear.
    One request each, `inputs.json` inspected, before any comparison data is
    collected. This supersedes the previous "vLLM-only" framing of this item —
    MLX needs it too (§2).
-1. Re-run the ISL sweep with `--artifact-dir` per configuration so §3 has
-   preserved evidence, whenever an Apple Silicon machine is next available.
+1. **Re-run the full M1 baseline under the frozen configuration** — thinking
+   disabled, `--random-seed` set, model pinned to a commit SHA, `--artifact-dir`
+   per configuration. This is what turns §3–§5 from a preliminary
+   characterization into a comparison arm, and it also restores the ISL raw
+   exports lost to overwriting.
 2. NVIDIA sweeps — A-series and L-series — with identical AIPerf flags. Record
    exact SKUs: bandwidth is the axis, so "A100" without 40GB/80GB is not a
    data point.
