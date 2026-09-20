@@ -3,9 +3,9 @@
 Measured characterization of `mlx_lm.server` serving Qwen3-0.6B on a MacBook Pro
 M1 (8GB unified memory), with NVIDIA AIPerf as the load client.
 
-All numbers here come from a single unattended session on 2026-09-19, 21:08–22:54
-local, under one configuration, with thinking disabled, a fixed seed and a
-separate artifact directory per run. An earlier round on the same machine is
+All numbers here come from a single session on 2026-09-19, 21:08–22:54 local,
+under one configuration, with thinking disabled, a fixed seed and a separate
+artifact directory per run. An earlier round on the same machine is
 referenced only where the two disagree; it is not mixed into any table.
 
 This is a standalone report. It is not one arm of a controlled comparison, and
