@@ -44,10 +44,11 @@ abl_ttft_pc1 = [1587.19, 1662.65]
 abl_itl_pc8 = [54.88, 61.35]
 abl_itl_pc1 = [57.92, 85.09]
 
-# session drift, ISL 512 conc 1, same config over the session
-drift_label = ["warm1\n21:08", "warm2\n21:09", "warm3\n21:10",
-               "isl512\n21:16", "fresh\n21:51", "cache10\n22:05"]
-drift_itl = [22.81, 22.87, 23.26, 27.02, 26.89, 24.31]
+# session drift: ISL 512, conc 1, --prompt-cache-size 1, identical config.
+# cache10_isl512 (24.31 ms at 22:05) is excluded — different cache setting.
+drift_label = ["warm1\n21:08\nn=10", "warm2\n21:09\nn=10", "warm3\n21:10\nn=10",
+               "isl512\n21:16\nn=100", "fresh proc\n21:51\nn=100"]
+drift_itl = [22.81, 22.87, 23.26, 27.02, 26.89]
 
 
 # ---------------------------------------------------------------- fig 1
@@ -147,9 +148,11 @@ ax.plot(range(len(drift_itl)), drift_itl, marker="o", color="C3")
 ax.set_xticks(range(len(drift_label))); ax.set_xticklabels(drift_label, fontsize=9)
 ax.set_ylabel("ITL p50 (ms)")
 ax.set_title("Same workload, same machine, one session\n"
-             "ISL 512, concurrency 1 — 18% drift with no change in workload",
-             fontsize=11)
+             "ISL 512, concurrency 1, cache size 1 — 18% spread", fontsize=11)
 ax.set_ylim(0, 32)
+ax.annotate("sample size differs between the early and late points;\n"
+            "see results.md 7.2", xy=(0.02, 0.06), xycoords="axes fraction",
+            fontsize=8.5, color="0.4")
 fig.savefig("fig_session_drift.png"); plt.close(fig)
 
 print("wrote fig_itl_vs_context.png, fig_prefill_rate.png, fig_concurrency.png,"
