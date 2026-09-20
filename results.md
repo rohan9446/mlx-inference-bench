@@ -40,7 +40,8 @@ chunk with `system_fingerprint`, giving per-request provenance:
 
 | Parameter | Value |
 |---|---|
-| Model | `Qwen/Qwen3-0.6B` @ `c1899de289a04d12100db370d81485cdf75e47ca` |
+| Model | `Qwen/Qwen3-0.6B`, revision resolved and recorded, **not pinned** |
+| Resolved SHA | `c1899de289a04d12100db370d81485cdf75e47ca` |
 | Precision | bf16 |
 | Thinking | disabled, verified in the rendered payload |
 | Temperature | 0, sent explicitly |
@@ -70,6 +71,14 @@ aiperf profile --model Qwen/Qwen3-0.6B --endpoint-type chat --streaming \
 
 Server defaults worth recording, since two of them are varied in §5:
 `--prompt-cache-size 10`, `--prompt-concurrency 8`, `--decode-concurrency 32`.
+
+**On the model revision.** The script queries the HF API for what `main` resolves
+to and records the SHA, but `mlx_lm.server` has no revision flag and still loads
+`main`. That is provenance, not pinning: if the repo moves, a future run of this
+script loads different weights and the recorded SHA will no longer match what
+was served. Pinning properly means downloading the snapshot at that SHA, serving
+the local path, and passing `--tokenizer-revision <sha>` to AIPerf, which 0.12.0
+supports. Not done here.
 
 ### Thinking suppression, verified rather than assumed
 
@@ -163,10 +172,12 @@ explains why that middle is unreliable.
 
 From 1 to 8: TTFT ×6.0, ITL ×2.3.
 
-Per-request prefill rate falls almost exactly in proportion to concurrency
-(925 → 517 → 311 → 154), so the summed rate across users stays near 1,200 tok/s
-— close to the single-request peak in §3. There is no spare prefill capacity for
-added concurrency to exploit, and additional requests convert into TTFT.
+Per-request prefill rate falls steeply with concurrency (925 → 517 → 311 → 154
+tok/s), while the summed rate across users rises only modestly, from about 925
+to about 1,232 tok/s — roughly 33% for 8× the offered load, and close to the
+single-request peak in §3. Aggregate prefill capacity is therefore nearly
+exhausted at low concurrency; most of the additional offered load converts into
+TTFT rather than into completed prefill work.
 
 Decode behaves differently. ITL rises 27 → 47 ms on the first doubling and then
 only 47 → 61 across the next two, so after the initial step the decode cost of
@@ -209,8 +220,8 @@ completions stagger, so the median request sees its first token much sooner
 while later requests wait longer. Total prefill work is unchanged, which is why
 the median moves so much more than the aggregate.
 
-That reading also resolves §4 without contradicting it: aggregate prefill
-capacity is the ceiling either way, and the batching policy decides how the
+That reading also fits §4 without contradicting it: aggregate prefill capacity is
+close to its ceiling either way, and the batching policy decides how the
 resulting wait is distributed across requests. Confirming it requires the
 per-request TTFT distributions, which are in the committed
 `profile_export.jsonl` files but were not analyzed here.
@@ -253,21 +264,36 @@ The mechanism is prompt-cache retention, not model size. A single 8,192-token
 request completes; ten retained caches do not. With `--prompt-cache-size 1`, ISL
 8,192 completed 20 of 20 requests in this session (§3).
 
-### The failure mode changed between rounds
+### What happened, in order
 
-In the earlier round, with no swap file allocated, the run died within about two
-minutes. This session the machine already had a 2–3 GB swap file in use, and the
-same configuration ran for roughly 40 minutes — 320 prompt-processing progress
-lines, requests failing and being retried — before it was killed manually. The
-Metal OOM is present in the log throughout.
+Reconstructed from `server-cache10.log` and `run_baseline.out`:
 
-So the ceiling is real but its expression depends on the machine's memory state
-at the time. With no swap available it fails fast; with swap available it
-degrades into something unusable and fails slowly. A benchmark that reported
-only the first behaviour would be describing one of two outcomes.
+| Time | Event |
+|---|---|
+| 22:11:26 | `cache10_isl8192` profiling begins |
+| — | two 8,192-token requests complete |
+| ~22:12:12 | the third request triggers the Metal OOM, ~50 s in |
+| 22:12 – 22:49 | AIPerf does not recover from the failed server generation thread |
+| ~22:49:48 | interrupted manually |
 
-This run is recorded as `cache10_isl8192` with no AIPerf export, because it was
-terminated before the client wrote one. The server log is the evidence.
+So the OOM itself is fast, and the 38 minutes that follow are a **client hang
+after the server's generation thread died**, not slow degradation under memory
+pressure.
+
+An earlier draft of this section claimed the run "degraded into something
+unusable and fails slowly" over 40 minutes, based on a count of 320
+prompt-processing lines in the server log. That count was wrong: roughly 300 of
+those lines belong to the preceding 100-request ISL-512 run written to the same
+log, and only about 20 belong to the long-context run. The claim is withdrawn.
+
+What the evidence supports: the OOM is real and reproducible, and the client does
+not recover from it. What it does **not** support is any statement about swap
+changing the failure mode between rounds. The earlier round's faster death and
+this one's client hang were never compared under controlled conditions.
+
+This run is recorded as `cache10_isl8192` with no `profile_export_aiperf.json`,
+because AIPerf was interrupted before writing one. The partial per-request
+records and the server log are the evidence.
 
 ---
 
@@ -288,20 +314,27 @@ repeatability within one server process; this closes that gap.
 
 ### 7.2 Session drift is larger than fresh-process variance
 
-The same configuration measured at four points in the session:
+ISL 512, concurrency 1, `--prompt-cache-size 1` — the same configuration
+measured at five points in the session:
 
-| Run | Time | ITL p50 (ms) |
-|---|---|---:|
-| `warm1` | 21:08 | 22.81 |
-| `warm2` | 21:09 | 22.87 |
-| `warm3` | 21:10 | 23.26 |
-| `isl512` | 21:16 | 27.02 |
-| `isl512_freshproc` | 21:51 | 26.89 |
-| `cache10_isl512` | 22:05 | 24.31 |
+| Run | Time | n | ITL p50 (ms) |
+|---|---|---:|---:|
+| `warm1` | 21:08 | 10 | 22.81 |
+| `warm2` | 21:09 | 10 | 22.87 |
+| `warm3` | 21:10 | 10 | 23.26 |
+| `isl512` | 21:16 | 100 | 27.02 |
+| `isl512_freshproc` | 21:51 | 100 | 26.89 |
 
-ITL at a fixed ISL of 512 ranges from 22.81 to 27.02 ms, about 18%, with no
-change in workload. Thermal behaviour and accumulated memory pressure are the
-obvious candidates; neither was instrumented.
+ITL ranges from 22.81 to 27.02 ms, about 18%, with no change in workload.
+Thermal behaviour and accumulated memory pressure are the obvious candidates;
+neither was instrumented.
+
+Two caveats on this comparison. The three early points are 10-request medians
+and the two later ones are 100-request medians, so sample size is confounded with
+time; comparing the first ten seeded requests of each run would be a cleaner
+test and is left undone. And `cache10_isl512` at 22:05 measured 24.31 ms, which
+sits inside this range but is excluded here because its cache configuration
+differs (§5.2).
 
 **This is the most important caveat in the document.** An 18% drift at fixed
 configuration is the same magnitude as several of the differences reported in
@@ -340,9 +373,11 @@ The earlier claim was true of fresh processes and wrong about warm servers. A
    a run, so this is evidence of memory pressure rather than proof of paging
    stalls. Page-in counters would settle it and were not captured.
 
-2. **Co-located load client.** AIPerf runs on the same machine as the server.
-   Affects all runs equally, so trends hold; absolute values are pessimistic by
-   an unmeasured margin.
+2. **Co-located load client.** AIPerf runs on the same machine as the server and
+   competes with it for CPU. This may shift absolute values, and it may
+   contribute unevenly as concurrency rises, since the client's own work grows
+   with the request rate. Its impact was not isolated, so the concurrency sweep
+   in particular carries an unquantified client-side component.
 
 3. **No GPU telemetry.** AIPerf reports `Platform: unknown` and collects no
    counters on Apple Silicon — its backends are DCGM and pynvml. No utilization,
@@ -361,10 +396,17 @@ The earlier claim was true of fresh processes and wrong about warm servers. A
 7. **One model, one precision.** Qwen3-0.6B at bf16. Nothing extrapolates to 7B+
    models, where weight streaming dominates differently.
 
-8. **`cache10_isl8192` has no client-side export.** Terminated manually after 40
-   minutes; the server log is the only record.
+8. **`cache10_isl8192` has no client-side export.** The deliberate-OOM run hung
+   after the server's generation thread died and was interrupted manually 38
+   minutes later, so AIPerf never wrote a summary (§6). The session script is
+   therefore **not fully unattended**: it completes 14 of 15 runs on its own and
+   needs a manual kill on the last one. It has no watchdog.
 
-9. **Runs are ordered, and order is confounded with ISL.** The ISL sweep runs
+9. **The model revision is recorded, not pinned.** See §2. A future run of this
+   script against a moved repo would serve different weights under the same
+   commands.
+
+10. **Runs are ordered, and order is confounded with ISL.** The ISL sweep runs
    from short to long, so context length and time-in-session increase together.
    Given §7.2 this cannot be separated from the present data. A shuffled or
    interleaved sweep would fix it.
