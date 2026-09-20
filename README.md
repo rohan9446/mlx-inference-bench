@@ -92,6 +92,4 @@ figures/                    rendered plots
    bandwidth.
 4. `vllm-mlx` on the same M1 to separate stack contribution from hardware.
 
-## License
 
-MIT. See [LICENSE](LICENSE).
