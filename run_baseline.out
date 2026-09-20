@@ -1,0 +1,65 @@
+[21:08:39] M1 final session
+[21:08:39] host: Darwin 27.0.0 arm64  macOS 27.0
+[21:08:39] python: Python 3.12.14
+[21:08:39]   mlx: 0.32.2
+[21:08:39]   mlx-lm: 0.31.3
+[21:08:39]   mlx-metal: 0.32.2
+[21:08:40]   transformers: 5.17.0
+[21:08:40]   numpy: 2.5.3
+[21:08:40]   aiperf: 0.12.0
+[21:08:40] seed: 42
+[21:08:40] extra-inputs: {"temperature":0,"chat_template_kwargs":{"enable_thinking":false}}
+[21:08:40] model: Qwen/Qwen3-0.6B @ c1899de289a04d12100db370d81485cdf75e47ca  (resolved at run time; mlx_lm has no revision flag)
+[21:08:42] server defaults: prompt-cache-size 10, prompt-concurrency 8, decode-concurrency 32
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+[21:08:42] server start [main]: --prompt-cache-size 1
+[21:08:44]   up (pid 1315)
+[21:08:45] --- warm-up curve ---
+[21:08:45] run warm1  ISL=512 conc=1 n=10
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+[21:09:27] run warm2  ISL=512 conc=1 n=10
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+[21:10:09] run warm3  ISL=512 conc=1 n=10
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+[21:10:52] --- preflight probe ---
+[21:10:52] run probe  ISL=512 conc=1 n=5
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+preflight: enable_thinking in payload = True
+preflight: temperature in payload     = True
+preflight: OSL avg = 127.8  min = 127.0
+[21:11:18] preflight passed
+[21:11:18] --- ISL sweep ---
+[21:11:18] run isl128  ISL=128 conc=1 n=100
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+[21:16:47] run isl512  ISL=512 conc=1 n=100
+    swap: total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)
+[21:23:33] run isl2048  ISL=2048 conc=1 n=100
+    swap: total = 3072.00M  used = 1380.12M  free = 1691.88M  (encrypted)
+[21:33:11] run isl8192  ISL=8192 conc=1 n=20
+    swap: total = 3072.00M  used = 1634.06M  free = 1437.94M  (encrypted)
+[21:39:24] --- concurrency sweep (prompt-concurrency 8, the default) ---
+[21:39:24] run conc2  ISL=512 conc=2 n=100
+    swap: total = 3072.00M  used = 1611.81M  free = 1460.19M  (encrypted)
+[21:45:20] run conc4  ISL=512 conc=4 n=100
+    swap: total = 3072.00M  used = 1595.81M  free = 1476.19M  (encrypted)
+[21:49:04] run conc8  ISL=512 conc=8 n=100
+    swap: total = 3072.00M  used = 1916.75M  free = 1155.25M  (encrypted)
+[21:51:35] --- fresh-process repeatability ---
+[21:51:35] server start [restart]: --prompt-cache-size 1
+[21:51:37]   up (pid 1914)
+[21:51:37] run isl512_freshproc  ISL=512 conc=1 n=100
+    swap: total = 3072.00M  used = 1836.75M  free = 1235.25M  (encrypted)
+[21:58:21] --- prefill ablation: --prompt-concurrency 1 vs default 8 ---
+[21:58:21] server start [pc1]: --prompt-cache-size 1 --prompt-concurrency 1
+[21:58:23]   up (pid 1973)
+[21:58:23] run pc1_conc4  ISL=512 conc=4 n=100
+    swap: total = 3072.00M  used = 1556.56M  free = 1515.44M  (encrypted)
+[22:02:15] run pc1_conc8  ISL=512 conc=8 n=100
+    swap: total = 3072.00M  used = 2292.75M  free = 779.25M  (encrypted)
+[22:05:04] --- cache ablation: default --prompt-cache-size 10 ---
+[22:05:04] server start [cache10]: 
+[22:05:06]   up (pid 2068)
+[22:05:06] run cache10_isl512  ISL=512 conc=1 n=100
+    swap: total = 2048.00M  used = 1278.25M  free = 769.75M  (encrypted)
+[22:11:20] next run is EXPECTED to fail with a Metal OOM. That is the point.
+[22:11:20] run cache10_isl8192  ISL=8192 conc=1 n=20

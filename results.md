@@ -1,12 +1,15 @@
-# LLM Inference on Apple Silicon: M1 Baseline
+# LLM Inference on Apple Silicon: M1 Characterization
 
 Measured characterization of `mlx_lm.server` serving Qwen3-0.6B on a MacBook Pro
-M1 (8GB unified memory). This is a preliminary Apple Silicon baseline for a
-planned cross-platform comparison against vLLM on NVIDIA. No NVIDIA data is
-included here yet, and see §2 for why these runs are not yet a valid comparison
-arm.
+M1 (8GB unified memory), with NVIDIA AIPerf as the load client.
 
-All measurements: 2026-09-19.
+All numbers here come from a single unattended session on 2026-09-19, 21:08–22:54
+local, under one configuration, with thinking disabled, a fixed seed and a
+separate artifact directory per run. An earlier round on the same machine is
+referenced only where the two disagree; it is not mixed into any table.
+
+This is a standalone report. It is not one arm of a controlled comparison, and
+no NVIDIA data is included.
 
 ---
 
@@ -15,8 +18,8 @@ All measurements: 2026-09-19.
 | Component | Version |
 |---|---|
 | Hardware | MacBook Pro 13", M1, 2020, 8GB unified memory |
-| OS | macOS 27.0 |
-| Python | 3.12 (Homebrew) |
+| OS | macOS 27.0 (Darwin 27.0.0 arm64) |
+| Python | 3.12.14 (Homebrew) |
 | mlx | 0.32.2 |
 | mlx-lm | 0.31.3 |
 | mlx-metal | 0.32.2 |
@@ -24,39 +27,33 @@ All measurements: 2026-09-19.
 | numpy | 2.5.3 |
 | Load client | NVIDIA AIPerf 0.12.0 |
 
-`mlx_lm.server` stamps every response chunk with a `system_fingerprint`, which
-gives per-request provenance for free:
+Full package set in `requirements.lock`. `mlx_lm.server` stamps every response
+chunk with `system_fingerprint`, giving per-request provenance:
 
 ```
 0.31.3-0.32.2-macOS-27.0-arm64-arm-64bit-applegpu_g13g
 ```
 
-There is no vLLM equivalent; the vLLM version must be recorded manually when the
-NVIDIA runs happen.
-
 ---
 
-## 2. Workload specification and known deviations
-
-The specification below is what every machine in the comparison must match.
-These runs deviate from it in three ways, documented at the end of this section.
+## 2. Workload
 
 | Parameter | Value |
 |---|---|
-| Model | `Qwen/Qwen3-0.6B` (HF repo, not an mlx-community conversion) |
+| Model | `Qwen/Qwen3-0.6B` @ `c1899de289a04d12100db370d81485cdf75e47ca` |
 | Precision | bf16 |
-| Thinking | **NOT disabled in these runs — see below** |
+| Thinking | disabled, verified in the rendered payload |
+| Temperature | 0, sent explicitly |
+| Random seed | 42 |
 | Output length target | 128 tokens |
-| Temperature | 0 |
-| Random seed | **not pinned** (see §7) |
-| Model revision | **not pinned to a commit SHA** (see §7) |
-| Concurrency | 1 (ISL sweep), 1–8 (concurrency sweep) |
-| Requests per run | 100 (except ISL 8192, n=20) |
+| Requests per run | 100 (ISL 8192: 20; warm-up: 10; probe: 5) |
 
 **Server:**
 
 ```bash
-mlx_lm.server --model Qwen/Qwen3-0.6B --port 8080 --prompt-cache-size 1
+mlx_lm.server --model Qwen/Qwen3-0.6B --port 8080 \
+  --prompt-cache-size 1 \
+  --chat-template-args '{"enable_thinking": false}'
 ```
 
 **Client:**
@@ -65,440 +62,353 @@ mlx_lm.server --model Qwen/Qwen3-0.6B --port 8080 --prompt-cache-size 1
 aiperf profile --model Qwen/Qwen3-0.6B --endpoint-type chat --streaming \
   --url http://localhost:8080 --concurrency <C> \
   --synthetic-input-tokens-mean <ISL> --synthetic-input-tokens-stddev 0 \
-  --output-tokens-mean 128 --output-tokens-stddev 0 --request-count 100
+  --output-tokens-mean 128 --output-tokens-stddev 0 \
+  --extra-inputs '{"temperature":0,"chat_template_kwargs":{"enable_thinking":false}}' \
+  --random-seed 42 --request-count <N> \
+  --artifact-dir results_parity/<name>
 ```
 
-### Thinking suppression: specified, verified, and then not applied
+Server defaults worth recording, since two of them are varied in §5:
+`--prompt-cache-size 10`, `--prompt-concurrency 8`, `--decode-concurrency 32`.
 
-This is a known defect in these runs, disclosed rather than corrected after the
-fact.
+### Thinking suppression, verified rather than assumed
 
-The mechanism works. `mlx_lm` has no `--no-think` flag; thinking is suppressed
-through the chat template. On `mlx_lm.server` (v0.31.3) the option is
-`--chat-template-args '{"enable_thinking": false}'`; over HTTP the per-request
-field is `{"chat_template_kwargs": {"enable_thinking": false}}`.
+A previous round on this machine specified thinking as disabled and never
+applied it — the flag was tested interactively and omitted from every benchmark
+command. This session checks it at the request level before collecting anything:
+a 5-request probe, then an assertion against the rendered `inputs.json`.
 
-**Neither was applied to the benchmark runs.** The server was started without
-`--chat-template-args`, and no AIPerf invocation passed
-`chat_template_kwargs`. The committed request payloads
-(`artifacts/*/inputs.json`) confirm it:
-
-```json
-{"messages": [...], "model": "Qwen/Qwen3-0.6B", "stream": true,
- "max_completion_tokens": 128, "min_tokens": 128, "ignore_eos": true}
+```
+preflight: enable_thinking in payload = True
+preflight: temperature in payload     = True
+preflight: OSL avg = 127.8  min = 127.0
 ```
 
-Qwen3's chat template defaults `enable_thinking` to true, so the generated
-tokens in every run here were most likely reasoning tokens rather than answer
-text.
-
-**What this affects.** Nothing in the latency mechanics. Decode cost per token
-is set by weight and KV-cache traffic, which does not depend on what the token
-says; prefill never touches the output at all. The ISL curve, the effective
-prefill rate, the memory ceiling, and the concurrency behaviour all stand.
-
-**What it does affect** is the cross-platform comparison, which has not been run
-yet. If vLLM suppresses thinking and MLX does not, ITL and OSL are not measuring
-the same thing. Every future run on either platform must carry an explicit
-thinking setting, and the rendered request payload must be committed as evidence
-that it took effect.
-
-**Open parity item:** on the vLLM side, `--reasoning-parser qwen3` *parses*
-reasoning output; it does not suppress it. Suppression is
-`--default-chat-template-kwargs '{"enable_thinking": false}'` server-side, or
-`chat_template_kwargs` per request. Verify with a single request and commit the
-payload before collecting anything.
-
-### These runs are not yet a valid comparison arm
-
-Three deviations from the specification above, taken together:
-
-| Specified | As run |
-|---|---|
-| Thinking disabled | Thinking on (this section) |
-| Fixed seed | No `--random-seed` passed (§7.7) |
-| Pinned model revision | Loaded from `main` (§7.7) |
-
-The NVIDIA runs will be collected *with* all three applied. That makes them a
-different workload, not the same one, so this baseline cannot be set beside them
-and called a like-for-like comparison. Two ways forward, and this project takes
-the first:
-
-1. **Re-run the M1 baseline once** under the final frozen configuration —
-   thinking disabled, `--random-seed` set, model pinned to a commit SHA,
-   `--artifact-dir` per configuration. Roughly 45 minutes of machine time, and
-   it makes the comparison valid.
-2. Present the NVIDIA work as an independent follow-up benchmark rather than a
-   comparison.
-
-Until (1) happens, everything here is a preliminary characterization of MLX on
-M1, not one half of a controlled experiment. The findings in §3–§5 are about
-latency mechanics and are unaffected by the deviations; what the deviations
-block is the *comparison*, not the *measurements*.
+Output length did not collapse with thinking off: 127.8 against a 128 cap. On
+synthetic prompts the model runs to the cap either way, so these runs are
+broadly comparable to the earlier round despite the different generation mode.
 
 ---
 
 ## 3. ISL sweep (concurrency 1)
 
-Note on the prefill column: this is the *effective per-request prefill rate*,
-derived as ISL / TTFT. TTFT includes scheduling and queueing, so this is a
-user-visible rate, not a direct engine-level count of prefill tokens executed
-per second. The distinction matters under concurrency (§4).
+The prefill column is `ISL / TTFT`, the user-visible rate. TTFT includes
+scheduling, so it is not an engine-level count of prefill tokens executed per
+second. That distinction matters in §4 and §5.
 
-| ISL | TTFT p50 (ms) | TTFT avg (ms) | Effective prefill rate tok/s (p50) | ITL p50 (ms) | ITL avg (ms) |
-|---:|---:|---:|---:|---:|---:|
-| 128 | 269.28 | 281.76 | 475.25 | 22.50 | 22.55 |
-| 512 | 520.30 | 521.57 | 984.04 | 23.33 | 23.42 |
-| 2048 | 2,023.14 | 2,025.98 | 1,012.28 | 26.52 | 26.59 |
-| 8192 | 12,024.67 | 12,094.53 | 681.19 | 41.60 | 42.28 |
+| ISL | TTFT p50 (ms) | Prefill rate (tok/s) | ITL p50 (ms) | OSL avg |
+|---:|---:|---:|---:|---:|
+| 128 | 282.19 | 454 | 22.19 | 123.15 |
+| 512 | 553.34 | 925 | 27.02 | 127.47 |
+| 2,048 | 2,070.65 | 989 | 27.19 | 124.95 |
+| 8,192 | 12,127.51 | 675 | 47.91 | 127.95 |
 
-ISL 8192 is n=20; all others n=100.
+ISL 8192 is n=20; the rest n=100.
 
-**Evidence status:** these four rows are transcribed from AIPerf's console
-output at the time of each run. Their raw exports were **not** preserved — AIPerf
-names its artifact directory by concurrency, and all four ran at concurrency 1,
-so each overwrote the last. The surviving `concurrency1` directory holds the
-final run written to it (an ISL 512 repeat with `min_tokens`/`ignore_eos` set,
-TTFT p50 520.97, ITL p50 23.32). The table's ISL 512 row comes from the earlier,
-unpreserved run at 520.30 / 23.33; the two agree to 0.13%, which is the
-reproducibility check in §6 but is not a substitute for the missing exports.
-Treat §3 as reported-but-not-independently-verifiable, and §4 as verifiable.
-Future runs use `--artifact-dir` per configuration.
+### Finding 1 — prefill rate is non-monotonic, peaking near 2,048
 
-### Finding 1 — effective prefill rate is non-monotonic
+454 → 925 → 989 → 675 tok/s. This reproduces the earlier round (475 → 984 →
+1,012 → 681) within about 4% at every point, which is the strongest agreement
+between the two rounds anywhere in this document.
 
-475 → 984 → 1,012 → 681 tok/s.
+The measurement is the shape. The mechanism is interpretation, since no Apple
+GPU utilization or bandwidth counters were collected (§8.3). A reading
+consistent with the data: at short prompts fixed per-request overhead is
+amortized over too few tokens, and the ramp is that overhead being diluted; the
+fall at 8,192 is consistent with attention cost growing faster than linearly.
+Memory pressure is an equally live candidate for the fall — swap was in use by
+then (§8.1).
 
-The rate climbs steeply from 128 to 512, plateaus around 2048, then **falls** at
-8192. The measurement is the shape; the mechanism below is interpretation, since
-no Apple GPU utilization or bandwidth counters were collected (§7.3).
+### Finding 2 — TTFT at 8,192 is 47% worse than linear
 
-A reading consistent with the data: at short prompts, fixed per-request and
-kernel-launch overhead is amortized over too few tokens, and the ramp is that
-overhead being diluted. At 8192 the fall is consistent with attention cost
-growing faster than linearly in sequence length and overtaking whatever
-utilization gain remains. Neither half of that is established here — memory
-pressure at 8192 is an equally live candidate for the fall, given §5.
+At the observed peak of 989 tok/s, 8,192 tokens should prefill in ~8.28 s.
+Measured: 12.13 s. The same falloff as Finding 1, expressed as latency.
 
-What is measured: an efficiency peak around 2048 on this hardware, with a real
-penalty beyond it.
+### Finding 3 — ITL is flat to 2,048, then rises sharply
 
-Practical consequence: a per-token cost model calibrated at ISL 128 overstates
-prefill cost by roughly 2× at ISL 512.
+22.19 → 27.02 → 27.19 → 47.91 ms. From 128 to 8,192 that is +116%.
 
-### Finding 2 — TTFT at 8192 is 49% worse than linear
+**This is not the smooth curve the earlier round suggested,** and the difference
+matters. Between 512 and 2,048 the context grows 4× and ITL does not move at all
+(27.02 → 27.19). Between 2,048 and 8,192 it grows 4× again and ITL rises 76%.
 
-At the observed peak of 1,012 tok/s, 8192 tokens should prefill in ~8.09 s.
-Measured: 12.02 s. The gap is the Finding 1 falloff expressed as latency rather
-than as a rate; the same interpretive caveat applies to its cause.
+A pure KV-cache-traffic model predicts monotonic growth throughout, so it does
+not fit the flat middle. Whatever drives the 8,192 result is either strongly
+non-linear in context length or is something other than cache streaming — memory
+pressure being the obvious candidate, since swap was active for the 2,048 and
+8,192 runs and not for 128 and 512.
 
-### Finding 3 — inter-token latency rises 85% with prompt length
+Part of the low-end variation is also session drift rather than context. See
+§7.2: ITL at a fixed ISL of 512 measured 22.81–23.26 ms early in the session and
+27.02 ms an hour later. That is the same size as the 128→512 step in this table.
+The robust claim is the sharp rise at 8,192, not the gradual ramp below it.
 
-22.50 → 41.60 ms p50, from ISL 128 to ISL 8192.
-
-Decode is conventionally described as independent of prompt length. It is not.
-Every decode step re-reads the entire KV cache, so the per-token memory traffic
-grows with context.
-
-Rough check for Qwen3-0.6B (28 layers, 8 KV heads, head_dim 128, bf16):
-~0.11 MB of KV per token.
-
-| ISL | KV re-read per decode step | Predicted ITL delta @ 68 GB/s | Measured delta |
-|---:|---:|---:|---:|
-| 128 | ~14 MB | baseline | baseline |
-| 8192 | ~900 MB | ~+13 ms | +19.1 ms |
-
-Same order of magnitude, correct direction. The residual is attention compute
-and scheduling overhead on top of the raw streaming cost.
-
-This falsifies the naive roofline prediction this project started from, which
-treated decode as a fixed per-token cost set by weight bandwidth alone.
-
-**Testable prediction:** if the effect is driven by KV-cache traffic, a machine
-with more memory bandwidth should show a flatter ITL-vs-context curve, roughly
-in proportion. An L4 (~300 GB/s, about 4.4× this machine) is a useful test
-because it is close to that bandwidth with an entirely different architecture,
-so a matching slope would point at bandwidth rather than at anything
-Apple-specific.
+For reference, the earlier round reported 22.50 → 23.33 → 26.52 → 41.60 and was
+described as a smooth 85% rise. Both rounds agree that ITL roughly doubles from
+128 to 8,192. They disagree on the shape in between, and the drift measurement
+explains why that middle is unreliable.
 
 ---
 
-## 4. Concurrency sweep (ISL 512, OSL 128)
+## 4. Concurrency sweep (ISL 512, server defaults)
 
-| Concurrency | TTFT p50 (ms) | ITL p50 (ms) | Output tok/s (all users) | Per-user decode tok/s | Error rate |
-|---:|---:|---:|---:|---:|---:|
-| 1 | 520.30 | 23.33 | 36.56 | 43.08 | 0% |
-| 2 | 979.03 | 44.12 | 38.70 | 22.76 | 0% |
-| 4 | 1,787.34 | 48.24 | 53.35 | 20.84 | 0% |
-| 8 | 3,400.50 | 53.70 | 96.02 | 18.62 | 2% |
+| Concurrency | TTFT p50 (ms) | ITL p50 (ms) | Prefill rate (tok/s) | Errors |
+|---:|---:|---:|---:|---:|
+| 1 | 553.34 | 27.02 | 925 | 0% |
+| 2 | 990.06 | 47.19 | 517 | 0% |
+| 4 | 1,647.63 | 54.88 | 311 | 0% |
+| 8 | 3,316.97 | 61.35 | 154 | 2% |
 
-### Finding 4 — decode scales with concurrency; prefill capacity saturates
+### Finding 4 — TTFT degrades much faster than ITL
 
-The two phases respond very differently to added load.
+From 1 to 8: TTFT ×6.0, ITL ×2.3.
 
-**Decode scales.** From c=2 to c=8, concurrency rose 4× while ITL rose only 22%
-(44.12 → 53.70 ms) and total output throughput rose 2.5×. Per-user decode held
-roughly flat (22.76 → 18.62 tok/s). Active decode throughput climbed
-45 → 83 → 150 tok/s.
+Per-request prefill rate falls almost exactly in proportion to concurrency
+(925 → 517 → 311 → 154), so the summed rate across users stays near 1,200 tok/s
+— close to the single-request peak in §3. There is no spare prefill capacity for
+added concurrency to exploit, and additional requests convert into TTFT.
 
-The c=1 → c=2 step is a one-time cost, not the trend: ITL doubles and throughput
-is flat. Everything after that amortizes.
+Decode behaves differently. ITL rises 27 → 47 ms on the first doubling and then
+only 47 → 61 across the next two, so after the initial step the decode cost of
+extra concurrency amortizes.
 
-**Prefill does not.** TTFT p50 scales ~1.9× per doubling: 520 → 979 → 1,787 →
-3,400 ms. Effective per-request prefill rate falls almost exactly
-proportionally (984 → 523 → 287 → 151 tok/s), while the summed rate across
-users stays pinned around 1,000–1,200 tok/s — which is approximately the
-*single-request* peak measured in §3 (1,012 tok/s at ISL 2048).
-
-That is the key observation: **prefill was already at its ceiling at
-concurrency 1.** There is no spare prefill capacity for added concurrency to
-exploit, so additional requests convert directly into TTFT.
-
-Net over the range: 8× concurrency buys 2.6× total output throughput. TTFT
-degraded far more sharply in relative terms than ITL, 6.5× against 2.3×. In
-absolute terms both costs are real — at ~127 output tokens, the ITL increase
-adds roughly 3.9 s to each request's decode phase, against a 2.9 s increase in
-TTFT — so this is a difference in scaling behaviour, not a case of decode being
+In absolute terms both costs are real. At ~127 output tokens, the ITL increase
+adds roughly 4.4 s to each request's decode phase against a 2.8 s increase in
+TTFT. This is a difference in scaling behaviour, not a case of decode being
 free.
 
-**What this does not establish.** An earlier draft of this document claimed
-prompts are processed one at a time. That claim is withdrawn — it was inferred
-from latency scaling, not measured. `mlx_lm.server` exposes
-`--prompt-concurrency` ("prompts in parallel") and a decode concurrency setting,
-neither of which was varied here; only `--prompt-cache-size` was set. The data
-show that prefill *capacity* saturates at low concurrency. They do not identify
-the cause, which could be GPU compute saturation, memory bandwidth, scheduler
-policy, chunked-prefill behavior, batching efficiency, or serialization
-somewhere in the stack.
-
-Distinguishing those requires a controlled sweep — hold concurrency fixed and
-vary `--prompt-concurrency` — which has not been run.
+The earlier round measured ×6.5 and ×2.3 for the same quantities. Close
+agreement.
 
 ---
 
-## 5. Memory ceiling
+## 5. Ablations
 
-### The OOM
+### 5.1 Prefill parallelism: `--prompt-concurrency` 1 vs the default 8
 
-ISL 8192 with default server settings fails with a hard Metal allocation error,
-not swap thrashing:
+This is the experiment the previous round listed as an open question. Request
+concurrency is held fixed; only the server's prefill batching changes.
+
+| Config | TTFT p50 (ms) | ITL p50 (ms) | Prefill rate (tok/s) | Errors |
+|---|---:|---:|---:|---:|
+| conc 4, prompt-concurrency 8 | 1,647.63 | 54.88 | 311 | 0% |
+| conc 4, prompt-concurrency 1 | 1,587.19 | 57.92 | 323 | 0% |
+| conc 8, prompt-concurrency 8 | 3,316.97 | 61.35 | 154 | 2% |
+| conc 8, prompt-concurrency 1 | **1,662.65** | **85.09** | 308 | 2% |
+
+**Finding 5 — prefill batching trades TTFT for ITL, and at concurrency 8 the
+trade is severe.** Turning prefill batching off halves median TTFT (3,317 →
+1,663 ms) and makes ITL 39% worse (61.35 → 85.09 ms). At concurrency 4 the two
+settings are within noise.
+
+An interpretation consistent with the numbers, not established by them: with
+`--prompt-concurrency 8` the server gathers eight prompts and completes them
+together, so every request waits for the whole batch and all eight TTFTs land
+late. With `--prompt-concurrency 1` prompts are processed one at a time and
+completions stagger, so the median request sees its first token much sooner
+while later requests wait longer. Total prefill work is unchanged, which is why
+the median moves so much more than the aggregate.
+
+That reading also resolves §4 without contradicting it: aggregate prefill
+capacity is the ceiling either way, and the batching policy decides how the
+resulting wait is distributed across requests. Confirming it requires the
+per-request TTFT distributions, which are in the committed
+`profile_export.jsonl` files but were not analyzed here.
+
+Practical consequence: on this hardware the default is tuned for aggregate
+throughput at the cost of median time-to-first-token, and an interactive
+workload at high concurrency would likely prefer `--prompt-concurrency 1`.
+
+### 5.2 Prompt cache size: default 10 vs 1, at ISL 512
+
+| Config | TTFT p50 (ms) | ITL p50 (ms) | Prefill rate (tok/s) |
+|---|---:|---:|---:|
+| `--prompt-cache-size 1` | 553.34 | 27.02 | 925 |
+| default (10) | 540.27 | 24.31 | 948 |
+
+No meaningful difference, and the gap is smaller than the session drift measured
+in §7.2. That is the expected result: AIPerf generates distinct synthetic
+prompts, so there are no prefix hits and the retained caches cannot help. They
+can still hurt, which is §6.
+
+This does not generalize to real serving, where prefix reuse is common and the
+cache earns its memory.
+
+---
+
+## 6. Memory ceiling
+
+### The OOM reproduces
+
+With the default `--prompt-cache-size 10`, ISL 8,192 fails with a hard Metal
+allocation error. Captured this time in `server-cache10.log` rather than
+transcribed from a terminal:
 
 ```
 RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory
 (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory)
 ```
 
-Server logs identify the cause. `mlx_lm.server` retains KV caches for the last
-N requests (default N=10):
+The mechanism is prompt-cache retention, not model size. A single 8,192-token
+request completes; ten retained caches do not. With `--prompt-cache-size 1`, ISL
+8,192 completed 20 of 20 requests in this session (§3).
 
-```
-Prompt Cache: 10 sequences, 2.50 GB     # at ISL 2048 — holds
-Prompt Cache: 10 sequences, 3.21 GB     # at ISL 8192 — dies on request 2
-```
+### The failure mode changed between rounds
 
-A single 8192-token request completes fine. Ten retained caches do not. The
-binding constraint is prompt-cache retention, not model size.
+In the earlier round, with no swap file allocated, the run died within about two
+minutes. This session the machine already had a 2–3 GB swap file in use, and the
+same configuration ran for roughly 40 minutes — 320 prompt-processing progress
+lines, requests failing and being retried — before it was killed manually. The
+Metal OOM is present in the log throughout.
 
-### The fix
+So the ceiling is real but its expression depends on the machine's memory state
+at the time. With no swap available it fails fast; with swap available it
+degrades into something unusable and fails slowly. A benchmark that reported
+only the first behaviour would be describing one of two outcomes.
 
-```bash
---prompt-cache-size 1     # max distinct KV caches held
---prompt-cache-bytes N    # alternative: byte budget
-```
-
-With `--prompt-cache-size 1`, ISL 8192 runs 20/20 requests clean.
-
-### Retention was pure overhead here
-
-Re-measuring the shorter lengths under both settings:
-
-| ISL | Metric | cache=10 | cache=1 |
-|---:|---|---:|---:|
-| 128 | TTFT p50 | 273.53 | 269.28 |
-| 128 | Prefill tok/s | 467.87 | 475.25 |
-| 128 | ITL p50 | 22.86 | 22.50 |
-| 512 | TTFT p50 | 527.89 | 520.30 |
-| 512 | TTFT std | 51.14 | 6.95 |
-
-Within noise on the means, and **variance drops sharply** at 512. AIPerf
-generates distinct synthetic prompts, so there are no prefix hits to reuse — the
-retained caches consumed memory and bought nothing. For benchmark workloads
-specifically, default retention is overhead that eventually kills the run.
-
-This does not generalize to real serving, where prefix reuse is common and the
-cache earns its memory.
-
-### Concurrency ceiling
-
-c=8 returned a 2% error rate (98/100 succeeded). The suspected cause is memory
-pressure — eight live KV caches plus weights against 8GB — but this is **not
-confirmed**: the failed-request logs were not inspected, so it is not
-established that these failures share the Metal OOM signature above. Treated
-here as suspected memory pressure at the practical edge of the tested
-configuration.
+This run is recorded as `cache10_isl8192` with no AIPerf export, because it was
+terminated before the client wrote one. The server log is the evidence.
 
 ---
 
-## 6. Reproducibility
+## 7. Repeatability
 
-The ISL 512 / c=1 configuration was measured twice, ~25 minutes apart, in
-separate AIPerf invocations against the same server process:
+### 7.1 Fresh process
+
+ISL 512 / concurrency 1, re-run 40 minutes later against a server restarted from
+scratch:
 
 | Run | TTFT p50 (ms) | ITL p50 (ms) |
 |---|---:|---:|
-| First | 520.30 | 23.33 |
-| Second | 520.97 | 23.32 |
+| `isl512` | 553.34 | 27.02 |
+| `isl512_freshproc` | 547.48 | 26.89 |
 
-0.13% and 0.04% apart.
+1.1% and 0.5% apart, across a process restart. The earlier round only tested
+repeatability within one server process; this closes that gap.
 
-### Warm-up matters enormously
+### 7.2 Session drift is larger than fresh-process variance
 
-Prompt throughput across three successive cold-to-warm runs on identical
-hardware, same model, same request:
+The same configuration measured at four points in the session:
 
-```
-8.337 → 77.476 → 105.921 tok/s
-```
+| Run | Time | ITL p50 (ms) |
+|---|---|---:|
+| `warm1` | 21:08 | 22.81 |
+| `warm2` | 21:09 | 22.87 |
+| `warm3` | 21:10 | 23.26 |
+| `isl512` | 21:16 | 27.02 |
+| `isl512_freshproc` | 21:51 | 26.89 |
+| `cache10_isl512` | 22:05 | 24.31 |
 
-A 9–13× swing from kernel compilation and cache warming alone. Every number in
-this document comes from a warmed server. Benchmarks that report a first run are
-reporting compilation time.
+ITL at a fixed ISL of 512 ranges from 22.81 to 27.02 ms, about 18%, with no
+change in workload. Thermal behaviour and accumulated memory pressure are the
+obvious candidates; neither was instrumented.
 
----
+**This is the most important caveat in the document.** An 18% drift at fixed
+configuration is the same magnitude as several of the differences reported in
+§3 and §5. Any single comparison smaller than roughly 20% should be treated as
+unresolved unless the two runs were adjacent in time.
 
-## 7. Limitations
+### 7.3 Warm-up is a process-start effect, not a server effect
 
-Stated rather than hidden.
+Three identical 10-request runs at the start of the session:
 
-1. **Co-located load client.** AIPerf runs on the same machine as the server —
-   only one machine was available. The load client competes for CPU with the
-   server process. Affects all numbers here equally, so trends are sound;
-   absolute values are pessimistic by an unmeasured margin.
+| Run | TTFT p50 (ms) | ITL p50 (ms) |
+|---|---:|---:|
+| `warm1` | 532.42 | 22.81 |
+| `warm2` | 531.01 | 22.87 |
+| `warm3` | 534.18 | 23.26 |
 
-2. **Output length is not pinned.** OSL comes back 126.97 ± 0.22 rather than a
-   clean 128. `mlx_lm.server` ignores AIPerf's `min_tokens` and `ignore_eos`
-   extra-inputs — verified by passing them explicitly and observing no change
-   (126.99, min 126, max 127). `max_tokens` caps but does not pin. These flags
-   were dropped rather than left in, because if vLLM *does* honor them, keeping
-   them would create a silent asymmetry between platforms — worse than no
-   pinning at all.
+Flat. The earlier round reported prompt throughput of 8.3 → 77.5 → 105.9 tok/s
+across successive runs and described it as a 9–13× warm-up swing; those were
+`mlx_lm.generate` CLI invocations, each a fresh process paying kernel
+compilation. Against a running server the effect is absorbed inside the first
+few requests and is not visible at run granularity.
 
-3. **No GPU telemetry.** AIPerf prints `Platform: unknown` and
-   `No GPU telemetry data collected during the benchmarking run.` on every run.
-   Its telemetry backends are DCGM/pynvml, which are NVIDIA-only. No
-   utilization, power, or memory-bandwidth counters were captured on Apple
-   Silicon. Joules-per-token — the intended cross-platform axis — is therefore
-   not yet measurable here. An Apple Silicon telemetry backend would need
-   `powermetrics` and `mx.get_peak_memory`.
-
-4. **`--prompt-cache-size` has no vLLM equivalent.** The comparison will have a
-   configuration asymmetry that must be disclosed, not papered over.
-
-5. **ISL 8192 is n=20**, not n=100, because each request takes ~21 s.
-
-6. **One model, one precision.** Qwen3-0.6B at bf16. Nothing here extrapolates
-   to 7B+ models, where weight streaming dominates differently.
-
-7. **The workload is not byte-identical, despite §2 calling for it.** No random
-   seed was passed to AIPerf, so synthetic prompts are not reproducible across
-   invocations, and the model and tokenizer were loaded from the HF repo without
-   pinning commit SHAs. The AIPerf version *is* recorded — 0.12.0, stamped into
-   every committed JSON export as `aiperf_version` and pinned in
-   `requirements.lock` — but the seed and the model revision are not
-   recoverable, so these runs cannot be reproduced token-for-token after the
-   fact. What supports them instead is sample size (n=100 per point) and the ISL
-   512 repeat agreeing to 0.13%: evidence of stability, not of reproducibility.
-   Seed and revision pinning apply to the M1 parity rerun and to all NVIDIA runs.
-
-   Temperature is also not explicit in the committed payloads. `mlx_lm` defaults
-   to 0, but vLLM's default differs, so future runs send it in the request
-   rather than relying on server defaults (§9).
-
-8. **Repeatability was tested within one server process, not across restarts.**
-   The §6 repeat used the same running server. Fresh-process repeats, which
-   would catch start-up and allocation variance, were not run.
-
-9. **The prefill saturation cause is unidentified.** See §4 — capacity
-   saturation is measured; its mechanism is not.
-
-10. **Thinking was not suppressed.** See §2. The generated tokens were most
-    likely reasoning tokens. This does not affect the latency mechanics measured
-    here, but it means the workload as run differs from the workload as
-    specified, and it must be fixed before any cross-platform comparison.
-
-11. **The ISL-sweep raw exports were overwritten.** See §3. Only the
-    concurrency-sweep artifacts are independently verifiable. The ISL rows are
-    reported from console output.
-
-12. **Causal language is interpretation.** Findings 1 and 2 describe measured
-    shapes; the explanations offered for them (overhead amortization, attention
-    cost, memory pressure) are hypotheses consistent with the data, not results.
-    No GPU counters were collected on this platform.
+The earlier claim was true of fresh processes and wrong about warm servers. A
+20-request warm-up is still discarded here as a precaution.
 
 ---
 
-## 8. Evidence
+## 8. Limitations
 
-What is committed, and what is not.
+1. **Swap was active for most of the session.** `vm.swapusage` showed 0.00M used
+   through `isl128` and `isl512`, then a 3 GB swap file appeared during
+   `isl2048` and stayed, with 1.3–2.3 GB used for every subsequent run. The two
+   short-ISL points are therefore swap-free and everything after them is not,
+   which is an asymmetry sitting directly under the §3 curve. `vm.swapusage`
+   counts pages written out at any time rather than pages being read back during
+   a run, so this is evidence of memory pressure rather than proof of paging
+   stalls. Page-in counters would settle it and were not captured.
 
-**Committed** — one directory per concurrency level, from the concurrency sweep
-in §4:
+2. **Co-located load client.** AIPerf runs on the same machine as the server.
+   Affects all runs equally, so trends hold; absolute values are pessimistic by
+   an unmeasured margin.
 
-```
-artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency{1,2,4,8}/
-    inputs.json                  rendered request payloads
-    profile_export.jsonl         per-request records
-    profile_export_aiperf.{csv,json}
-    profile_export_console.txt
-    logs/aiperf.log
-```
+3. **No GPU telemetry.** AIPerf reports `Platform: unknown` and collects no
+   counters on Apple Silicon — its backends are DCGM and pynvml. No utilization,
+   power or bandwidth data, so joules per token is not measurable here and every
+   causal statement in §3 and §5 is interpretation rather than result.
 
-`concurrency{2,4,8}` back the §4 rows directly. `concurrency1` holds the last
-run written to it, not the run quoted in §3 or the c=1 row of §4 — see the
-evidence note in §3.
+4. **Output length is not pinned.** OSL ranges 122.60–127.95 across runs against
+   a 128 cap. `mlx_lm.server` ignores AIPerf's `min_tokens` and `ignore_eos`,
+   verified by passing them explicitly in the earlier round and observing no
+   change. `max_tokens` caps but does not pin.
 
-The Python environment is pinned in `requirements.lock` (AIPerf 0.12.0).
+5. **Session drift of ~18% at fixed configuration.** See §7.2.
 
-**Not committed, and not recoverable:**
+6. **ISL 8,192 is n=20**, not n=100, because each request takes ~18 s.
 
-- Raw exports for ISL 128 / 2048 / 8192, and for the ISL 512 run quoted in the
-  tables (overwritten).
-- The cache=10 vs cache=1 comparison runs in §5.
-- The warm-up sequence in §6.
-- `mlx_lm.server` stdout with the prompt-cache growth lines and the Metal OOM
-  traceback. The error string in §5 is transcribed verbatim from the terminal.
-- Model and tokenizer commit SHAs.
-- Failure-specific logs for the two c=8 errors (the c=8 export records them as
-  connection resets).
+7. **One model, one precision.** Qwen3-0.6B at bf16. Nothing extrapolates to 7B+
+   models, where weight streaming dominates differently.
 
-Claims resting on uncommitted evidence are marked as such where they appear.
+8. **`cache10_isl8192` has no client-side export.** Terminated manually after 40
+   minutes; the server log is the only record.
+
+9. **Runs are ordered, and order is confounded with ISL.** The ISL sweep runs
+   from short to long, so context length and time-in-session increase together.
+   Given §7.2 this cannot be separated from the present data. A shuffled or
+   interleaved sweep would fix it.
 
 ---
 
-## 9. Next
+## 9. Evidence
 
-0. **Thinking suppression on both platforms, verified by committed payload.**
-   One request each, `inputs.json` inspected, before any comparison data is
-   collected. This supersedes the previous "vLLM-only" framing of this item —
-   MLX needs it too (§2).
-1. **Re-run the full M1 baseline under the frozen configuration** — thinking
-   disabled, `--random-seed` set, model pinned to a commit SHA, `--artifact-dir`
-   per configuration. This is what turns §3–§5 from a preliminary
-   characterization into a comparison arm, and it also restores the ISL raw
-   exports lost to overwriting.
-2. NVIDIA sweeps — A-series and L-series — with identical AIPerf flags. Record
-   exact SKUs: bandwidth is the axis, so "A100" without 40GB/80GB is not a
-   data point. An L4 (~300 GB/s) is the useful test of the §3 bandwidth
-   prediction, being close to 4.4× this machine's bandwidth on an entirely
-   different architecture.
-3. Send sampling parameters explicitly rather than relying on server defaults,
-   e.g.
-   `--extra-inputs '{"temperature":0,"chat_template_kwargs":{"enable_thinking":false}}'`,
-   and verify the rendered `inputs.json` on each platform before collecting.
-4. `vllm-mlx` on this same M1 — isolates stack contribution from hardware, since
-   the silicon is held constant.
+Every run in this document has a committed artifact directory:
 
-Beyond the parity rerun in item 1, no further exploratory M1 collection is
-planned. The `--prompt-concurrency` sweep that would identify the prefill
-saturation mechanism (§4) is left as an open question rather than an answered
-one.
+```
+results_parity/
+    manifest.txt                versions, model SHA, swap per run, timings
+    server-{main,restart,pc1,cache10}.log
+    mlx_lm_server_help.txt
+    aiperf-stdout.log
+    <run>/                      one per configuration, 15 total
+        inputs.json             rendered request payloads
+        profile_export.jsonl    per-request records
+        profile_export_aiperf.{csv,json}
+        profile_export_console.txt
+        logs/aiperf.log
+```
+
+`inputs.json` is what proves thinking suppression took effect.
+`server-cache10.log` is what proves the OOM. Neither existed in the earlier
+round.
+
+Not captured: GPU counters (§8.3), page-in statistics (§8.1), and a client-side
+export for `cache10_isl8192` (§8.8).
+
+---
+
+## 10. Next
+
+This machine is not available for further collection, so the following are open
+questions rather than planned work.
+
+1. A shuffled ISL sweep, to separate context length from session drift (§8.9).
+2. Page-in counters alongside `vm.swapusage`, to establish whether the §3
+   falloff at 8,192 is attention cost or paging (§8.1).
+3. Per-request TTFT distributions from the committed `profile_export.jsonl`, to
+   test the batching interpretation in §5.1 without new runs. This one needs no
+   hardware.
+4. Any future platform: `--random-seed`, a pinned model revision, an explicit
+   thinking setting verified in the rendered payload, and `--artifact-dir` per
+   configuration, with a single-request dry run before any sweep.
