@@ -13,9 +13,10 @@ but never applied to the benchmark runs, no random seed was passed, and the
 model revision was not pinned. The ISL-sweep raw exports were also overwritten,
 because AIPerf names its artifact directory by concurrency (§3).
 
-None of that changes the latency mechanics measured here. What it does mean is
-that the M1 baseline must be re-run once under the frozen configuration before
-it can be set beside NVIDIA numbers and called a like-for-like comparison.
+These deviations are not expected to change the qualitative latency trends
+reported here, but they do prevent a controlled cross-platform comparison. The
+M1 baseline must be re-run once under the frozen configuration before it can be
+set beside NVIDIA numbers and called like-for-like.
 
 ## Results
 
@@ -69,9 +70,10 @@ aiperf profile --model Qwen/Qwen3-0.6B --endpoint-type chat --streaming \
 `--prompt-cache-size 1` is part of the workload spec, not a tuning choice — see
 `results.md` §5.
 
-Note: the runs in `results.md` were collected without a pinned random seed, so
-synthetic prompts are not reproducible token-for-token. Seed pinning applies from
-the NVIDIA runs onward. See `results.md` §7.
+Note: the runs in `results.md` were collected without a pinned random seed or a
+pinned model revision, so they are not reproducible token-for-token. Seed and
+revision pinning apply to the M1 parity rerun and to all NVIDIA runs. See
+`results.md` §7.
 
 ## Layout
 
@@ -95,6 +97,4 @@ figures/                    rendered plots
    comparison arm.
 3. NVIDIA sweeps (A-series, L-series) with identical AIPerf flags, a pinned
    seed, and `--artifact-dir` per configuration.
-4. M5 Pro (~307 GB/s) to test whether the ITL-vs-context curve flattens with
-   bandwidth.
-5. `vllm-mlx` on the same M1 to separate stack contribution from hardware.
+4. `vllm-mlx` on the same M1 to separate stack contribution from hardware.

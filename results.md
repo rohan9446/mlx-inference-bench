@@ -214,10 +214,12 @@ and scheduling overhead on top of the raw streaming cost.
 This falsifies the naive roofline prediction this project started from, which
 treated decode as a fixed per-token cost set by weight bandwidth alone.
 
-**Testable prediction:** the M5 Pro (~307 GB/s, ~4.5× this machine) should show
-a substantially flatter ITL-vs-context curve. An L4 (~300 GB/s) is matched on
-bandwidth with completely different architecture, which makes it a controlled
-comparison rather than only a faster number.
+**Testable prediction:** if the effect is driven by KV-cache traffic, a machine
+with more memory bandwidth should show a flatter ITL-vs-context curve, roughly
+in proportion. An L4 (~300 GB/s, about 4.4× this machine) is a useful test
+because it is close to that bandwidth with an entirely different architecture,
+so a matching slope would point at bandwidth rather than at anything
+Apple-specific.
 
 ---
 
@@ -399,14 +401,18 @@ Stated rather than hidden.
 
 7. **The workload is not byte-identical, despite §2 calling for it.** No random
    seed was passed to AIPerf, so synthetic prompts are not reproducible across
-   invocations. The model and tokenizer were loaded from the HF repo without
-   pinning commit SHAs, and the AIPerf version was not recorded. These runs
-   cannot be reproduced token-for-token after the fact. What supports them
-   instead is sample size (n=100 per point) and the ISL 512 repeat agreeing to
-   0.13% — evidence of stability, not of reproducibility. The package set is
-   pinned after the fact in `requirements.lock`; the seed and the model revision
-   are not recoverable. Seed and revision pinning apply from the NVIDIA runs
-   onward.
+   invocations, and the model and tokenizer were loaded from the HF repo without
+   pinning commit SHAs. The AIPerf version *is* recorded — 0.12.0, stamped into
+   every committed JSON export as `aiperf_version` and pinned in
+   `requirements.lock` — but the seed and the model revision are not
+   recoverable, so these runs cannot be reproduced token-for-token after the
+   fact. What supports them instead is sample size (n=100 per point) and the ISL
+   512 repeat agreeing to 0.13%: evidence of stability, not of reproducibility.
+   Seed and revision pinning apply to the M1 parity rerun and to all NVIDIA runs.
+
+   Temperature is also not explicit in the committed payloads. `mlx_lm` defaults
+   to 0, but vLLM's default differs, so future runs send it in the request
+   rather than relying on server defaults (§9).
 
 8. **Repeatability was tested within one server process, not across restarts.**
    The §6 repeat used the same running server. Fresh-process repeats, which
@@ -482,15 +488,17 @@ Claims resting on uncommitted evidence are marked as such where they appear.
    exports lost to overwriting.
 2. NVIDIA sweeps — A-series and L-series — with identical AIPerf flags. Record
    exact SKUs: bandwidth is the axis, so "A100" without 40GB/80GB is not a
-   data point.
-3. M5 Pro (~307 GB/s) — confirm macOS ≥ 26.2 first, or MLX silently falls back
-   and skips the Neural Accelerators, which would quietly invalidate the prefill
-   comparison.
+   data point. An L4 (~300 GB/s) is the useful test of the §3 bandwidth
+   prediction, being close to 4.4× this machine's bandwidth on an entirely
+   different architecture.
+3. Send sampling parameters explicitly rather than relying on server defaults,
+   e.g.
+   `--extra-inputs '{"temperature":0,"chat_template_kwargs":{"enable_thinking":false}}'`,
+   and verify the rendered `inputs.json` on each platform before collecting.
 4. `vllm-mlx` on this same M1 — isolates stack contribution from hardware, since
    the silicon is held constant.
-5. Pin seed, AIPerf version, and model/tokenizer commit SHAs from the first
-   NVIDIA run onward.
 
-Not planned: further M1 collection. The `--prompt-concurrency` sweep that would
-identify the prefill saturation mechanism (§4) is left as an open question
-rather than an answered one.
+Beyond the parity rerun in item 1, no further exploratory M1 collection is
+planned. The `--prompt-concurrency` sweep that would identify the prefill
+saturation mechanism (§4) is left as an open question rather than an answered
+one.
