@@ -4,15 +4,18 @@ LLM inference benchmarking across Apple Silicon (MLX) and NVIDIA (vLLM), driven
 by a single OpenAI-compatible load client so the measurement stays constant when
 the hardware changes.
 
-**Current status:** Apple Silicon baseline collected. NVIDIA data not yet
-collected.
+**Current status:** preliminary Apple Silicon characterization. Not yet a
+comparison arm, and no NVIDIA data collected.
 
-Two known defects in this first round, disclosed in `results.md` rather than
-quietly fixed: thinking suppression was specified and verified but never applied
-to the benchmark runs (§2), and the ISL-sweep raw exports were overwritten
-because AIPerf names its artifact directory by concurrency (§3). Neither changes
-the latency mechanics measured here; both are fixed before any cross-platform
-comparison.
+These runs deviate from the workload specification in three ways, disclosed in
+`results.md` §2 rather than quietly fixed: thinking suppression was specified
+but never applied to the benchmark runs, no random seed was passed, and the
+model revision was not pinned. The ISL-sweep raw exports were also overwritten,
+because AIPerf names its artifact directory by concurrency (§3).
+
+None of that changes the latency mechanics measured here. What it does mean is
+that the M1 baseline must be re-run once under the frozen configuration before
+it can be set beside NVIDIA numbers and called a like-for-like comparison.
 
 ## Results
 
@@ -83,13 +86,15 @@ figures/                    rendered plots
 ## Next
 
 1. Thinking suppression on both platforms, verified by committing the rendered
-   request payload. On vLLM that is
-   `--default-chat-template-kwargs '{"enable_thinking": false}'`;
-   `--reasoning-parser qwen3` parses reasoning output, it does not suppress it.
-2. NVIDIA sweeps (A-series, L-series) with identical AIPerf flags, a pinned
+   request payload. On `mlx_lm.server` that is
+   `--chat-template-args '{"enable_thinking": false}'`; on vLLM,
+   `--default-chat-template-kwargs '{"enable_thinking": false}'`
+   (`--reasoning-parser qwen3` parses reasoning output, it does not suppress
+   it).
+2. Re-run the M1 baseline under the frozen configuration, so there is a valid
+   comparison arm.
+3. NVIDIA sweeps (A-series, L-series) with identical AIPerf flags, a pinned
    seed, and `--artifact-dir` per configuration.
-3. M5 Pro (~307 GB/s) to test whether the ITL-vs-context curve flattens with
+4. M5 Pro (~307 GB/s) to test whether the ITL-vs-context curve flattens with
    bandwidth.
-4. `vllm-mlx` on the same M1 to separate stack contribution from hardware.
-
-
+5. `vllm-mlx` on the same M1 to separate stack contribution from hardware.
