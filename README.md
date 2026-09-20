@@ -4,8 +4,15 @@ LLM inference benchmarking across Apple Silicon (MLX) and NVIDIA (vLLM), driven
 by a single OpenAI-compatible load client so the measurement stays constant when
 the hardware changes.
 
-**Current status:** Apple Silicon baseline complete. NVIDIA data not yet
+**Current status:** Apple Silicon baseline collected. NVIDIA data not yet
 collected.
+
+Two known defects in this first round, disclosed in `results.md` rather than
+quietly fixed: thinking suppression was specified and verified but never applied
+to the benchmark runs (§2), and the ISL-sweep raw exports were overwritten
+because AIPerf names its artifact directory by concurrency (§3). Neither changes
+the latency mechanics measured here; both are fixed before any cross-platform
+comparison.
 
 ## Results
 
@@ -67,19 +74,24 @@ the NVIDIA runs onward. See `results.md` §7.
 
 ```
 results.md                  measurements, analysis, limitations
-plot_results.py             figures (data hardcoded — also a record of it)
-requirements.lock           pinned Python environment
-artifacts/                  raw AIPerf exports (csv, json, logs) per run
+plot_results.py             figures (data hardcoded, also a record of it)
+requirements.lock           pinned Python environment (AIPerf 0.12.0)
+artifacts/                  raw AIPerf exports for the concurrency sweep only
 figures/                    rendered plots
 ```
 
 ## Next
 
-1. vLLM thinking-suppression parity — `--reasoning-parser qwen3` parses
-   reasoning output, it does not suppress it. Must be settled before NVIDIA data
-   is collected, or ITL and OSL are not measuring the same thing across
-   platforms.
-2. NVIDIA sweeps (A-series, L-series) with identical AIPerf flags.
+1. Thinking suppression on both platforms, verified by committing the rendered
+   request payload. On vLLM that is
+   `--default-chat-template-kwargs '{"enable_thinking": false}'`;
+   `--reasoning-parser qwen3` parses reasoning output, it does not suppress it.
+2. NVIDIA sweeps (A-series, L-series) with identical AIPerf flags, a pinned
+   seed, and `--artifact-dir` per configuration.
 3. M5 Pro (~307 GB/s) to test whether the ITL-vs-context curve flattens with
    bandwidth.
 4. `vllm-mlx` on the same M1 to separate stack contribution from hardware.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

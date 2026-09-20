@@ -44,7 +44,7 @@ comparison.
 |---|---|
 | Model | `Qwen/Qwen3-0.6B` (HF repo, not an mlx-community conversion) |
 | Precision | bf16 |
-| Thinking | disabled |
+| Thinking | **NOT disabled in these runs — see below** |
 | Output length target | 128 tokens |
 | Temperature | 0 |
 | Random seed | **not pinned** (see §7) |
@@ -67,28 +67,47 @@ aiperf profile --model Qwen/Qwen3-0.6B --endpoint-type chat --streaming \
   --output-tokens-mean 128 --output-tokens-stddev 0 --request-count 100
 ```
 
-Thinking is suppressed via the chat template, not a CLI flag — `mlx_lm` has no
-`--no-think`. On the CLI path:
+### Thinking suppression: specified, verified, and then not applied
 
-```
---chat-template-config '{"enable_thinking": false}'
-```
+This is a known defect in these runs, disclosed rather than corrected after the
+fact.
 
-Critically, `chat_template_kwargs` also passes through the HTTP path, which is
-what actually matters since AIPerf talks to the server:
+The mechanism works. `mlx_lm` has no `--no-think` flag; thinking is suppressed
+through the chat template, on the CLI as
+`--chat-template-config '{"enable_thinking": false}'` and over HTTP as
+`{"chat_template_kwargs": {"enable_thinking": false}}`. Both were tested
+interactively and both behaved correctly.
+
+**Neither was applied to the benchmark runs.** The server was started without
+`--chat-template-config`, and no AIPerf invocation passed
+`chat_template_kwargs`. The committed request payloads
+(`artifacts/*/inputs.json`) confirm it:
 
 ```json
-{"chat_template_kwargs": {"enable_thinking": false}}
+{"messages": [...], "model": "Qwen/Qwen3-0.6B", "stream": true,
+ "max_completion_tokens": 128, "min_tokens": 128, "ignore_eos": true}
 ```
 
-Without this, `<think>` tokens consume the entire generation budget and the
-measured output is not the measured output.
+Qwen3's chat template defaults `enable_thinking` to true, so the generated
+tokens in every run here were most likely reasoning tokens rather than answer
+text.
 
-**Open parity item:** vLLM-side thinking suppression is unresolved.
-`--reasoning-parser qwen3` *parses* thinking output; it does not suppress it.
-If vLLM emits `<think>` tokens and MLX does not, ITL and OSL are not measuring
-the same thing across platforms. This must be settled before any NVIDIA data is
-collected.
+**What this affects.** Nothing in the latency mechanics. Decode cost per token
+is set by weight and KV-cache traffic, which does not depend on what the token
+says; prefill never touches the output at all. The ISL curve, the effective
+prefill rate, the memory ceiling, and the concurrency behaviour all stand.
+
+**What it does affect** is the cross-platform comparison, which has not been run
+yet. If vLLM suppresses thinking and MLX does not, ITL and OSL are not measuring
+the same thing. Every future run on either platform must carry an explicit
+thinking setting, and the rendered request payload must be committed as evidence
+that it took effect.
+
+**Open parity item:** on the vLLM side, `--reasoning-parser qwen3` *parses*
+reasoning output; it does not suppress it. Suppression is
+`--default-chat-template-kwargs '{"enable_thinking": false}'` server-side, or
+`chat_template_kwargs` per request. Verify with a single request and commit the
+payload before collecting anything.
 
 ---
 
@@ -108,16 +127,34 @@ per second. The distinction matters under concurrency (§4).
 
 ISL 8192 is n=20; all others n=100.
 
+**Evidence status:** these four rows are transcribed from AIPerf's console
+output at the time of each run. Their raw exports were **not** preserved — AIPerf
+names its artifact directory by concurrency, and all four ran at concurrency 1,
+so each overwrote the last. The surviving `concurrency1` directory holds the
+final run written to it (an ISL 512 repeat with `min_tokens`/`ignore_eos` set,
+TTFT p50 520.97, ITL p50 23.32). The table's ISL 512 row comes from the earlier,
+unpreserved run at 520.30 / 23.33; the two agree to 0.13%, which is the
+reproducibility check in §6 but is not a substitute for the missing exports.
+Treat §3 as reported-but-not-independently-verifiable, and §4 as verifiable.
+Future runs use `--artifact-dir` per configuration.
+
 ### Finding 1 — effective prefill rate is non-monotonic
 
 475 → 984 → 1,012 → 681 tok/s.
 
-Throughput climbs steeply from 128 to 512, plateaus around 2048, then **falls**
-at 8192. The ramp is the GPU being underfed at short prompts, where fixed
-per-request and kernel-launch overhead dominates. The fall at 8192 is attention
-cost growing quadratically and overtaking the utilization gain.
+The rate climbs steeply from 128 to 512, plateaus around 2048, then **falls** at
+8192. The measurement is the shape; the mechanism below is interpretation, since
+no Apple GPU utilization or bandwidth counters were collected (§7.3).
 
-There is a measured efficiency sweet spot around 512–2048 on this hardware.
+A reading consistent with the data: at short prompts, fixed per-request and
+kernel-launch overhead is amortized over too few tokens, and the ramp is that
+overhead being diluted. At 8192 the fall is consistent with attention cost
+growing faster than linearly in sequence length and overtaking whatever
+utilization gain remains. Neither half of that is established here — memory
+pressure at 8192 is an equally live candidate for the fall, given §5.
+
+What is measured: an efficiency peak around 2048 on this hardware, with a real
+penalty beyond it.
 
 Practical consequence: a per-token cost model calibrated at ISL 128 overstates
 prefill cost by roughly 2× at ISL 512.
@@ -125,8 +162,8 @@ prefill cost by roughly 2× at ISL 512.
 ### Finding 2 — TTFT at 8192 is 49% worse than linear
 
 At the observed peak of 1,012 tok/s, 8192 tokens should prefill in ~8.09 s.
-Measured: 12.02 s. The gap is the same quadratic attention term surfacing in
-user-visible latency.
+Measured: 12.02 s. The gap is the Finding 1 falloff expressed as latency rather
+than as a rate; the same interpretive caveat applies to its cause.
 
 ### Finding 3 — inter-token latency rises 85% with prompt length
 
@@ -347,34 +384,68 @@ Stated rather than hidden.
 9. **The prefill saturation cause is unidentified.** See §4 — capacity
    saturation is measured; its mechanism is not.
 
+10. **Thinking was not suppressed.** See §2. The generated tokens were most
+    likely reasoning tokens. This does not affect the latency mechanics measured
+    here, but it means the workload as run differs from the workload as
+    specified, and it must be fixed before any cross-platform comparison.
+
+11. **The ISL-sweep raw exports were overwritten.** See §3. Only the
+    concurrency-sweep artifacts are independently verifiable. The ISL rows are
+    reported from console output.
+
+12. **Causal language is interpretation.** Findings 1 and 2 describe measured
+    shapes; the explanations offered for them (overhead amortization, attention
+    cost, memory pressure) are hypotheses consistent with the data, not results.
+    No GPU counters were collected on this platform.
+
 ---
 
 ## 8. Evidence
 
-AIPerf wrote raw artifacts for every run in this document to:
+What is committed, and what is not.
+
+**Committed** — one directory per concurrency level, from the concurrency sweep
+in §4:
 
 ```
-artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency<C>/
-    profile_export_aiperf.csv
-    profile_export_aiperf.json
+artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency{1,2,4,8}/
+    inputs.json                  rendered request payloads
+    profile_export.jsonl         per-request records
+    profile_export_aiperf.{csv,json}
+    profile_export_console.txt
     logs/aiperf.log
 ```
 
-These should be committed alongside this document, together with the
-`mlx_lm.server` stdout/stderr (which contains the prompt-cache growth lines and
-the Metal OOM traceback), the exact commands, and a `pip freeze` of the venv.
+`concurrency{2,4,8}` back the §4 rows directly. `concurrency1` holds the last
+run written to it, not the run quoted in §3 or the c=1 row of §4 — see the
+evidence note in §3.
 
-The full Python environment is pinned in `requirements.lock` (132 packages,
-captured from the venv that produced these runs; AIPerf 0.12.0).
+The Python environment is pinned in `requirements.lock` (AIPerf 0.12.0).
 
-Not yet captured: model/tokenizer commit SHAs, and failure-specific logs for the
-c=8 errors.
+**Not committed, and not recoverable:**
+
+- Raw exports for ISL 128 / 2048 / 8192, and for the ISL 512 run quoted in the
+  tables (overwritten).
+- The cache=10 vs cache=1 comparison runs in §5.
+- The warm-up sequence in §6.
+- `mlx_lm.server` stdout with the prompt-cache growth lines and the Metal OOM
+  traceback. The error string in §5 is transcribed verbatim from the terminal.
+- Model and tokenizer commit SHAs.
+- Failure-specific logs for the two c=8 errors (the c=8 export records them as
+  connection resets).
+
+Claims resting on uncommitted evidence are marked as such where they appear.
 
 ---
 
 ## 9. Next
 
-1. Resolve vLLM thinking suppression (blocking all NVIDIA data).
+0. **Thinking suppression on both platforms, verified by committed payload.**
+   One request each, `inputs.json` inspected, before any comparison data is
+   collected. This supersedes the previous "vLLM-only" framing of this item —
+   MLX needs it too (§2).
+1. Re-run the ISL sweep with `--artifact-dir` per configuration so §3 has
+   preserved evidence, whenever an Apple Silicon machine is next available.
 2. NVIDIA sweeps — A-series and L-series — with identical AIPerf flags. Record
    exact SKUs: bandwidth is the axis, so "A100" without 40GB/80GB is not a
    data point.
