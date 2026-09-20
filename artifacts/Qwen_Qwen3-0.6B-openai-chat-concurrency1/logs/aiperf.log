@@ -1,0 +1,800 @@
+2026-09-19 14:55:31.337 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 14:55:31.341 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 14:55:31.377 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 14:55:31.406 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 14:55:31.871 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 14:55:32.289 - system_controller - INFO - Registered Record Processor (id: 'record_processor_8018386c')
+2026-09-19 14:55:32.325 - system_controller - INFO - Registered Worker (id: 'worker_3926f06f')
+2026-09-19 14:55:33.398 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 14:55:33.759 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 14:55:33.759 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 14:55:33.762 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 14:55:33.764 - InferenceResultParser_29e8325d - INFO - Configuring tokenizers for inference result parser (resolve_alias: True)
+2026-09-19 14:55:33.765 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 14:55:33.776 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 14:55:33.777 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 14:55:33.784 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 14:55:33.787 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 14:55:33.787 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 14:55:33.787 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 14:55:35.947 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:55:35.950 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 14:55:35.951 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:55:35.953 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 14:55:35.982 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 14:55:35.985 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 14:55:36.101 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:55:36.102 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:55:36.133 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 14:55:36.135 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 14:55:36.250 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.250 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.354 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 14:55:36.356 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 14:55:36.468 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.468 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.574 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/special_tokens_map.json "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.574 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/special_tokens_map.json "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.680 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:36.680 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+2026-09-19 14:55:37.096 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 14:55:37.096 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 14:55:37.100 - InferenceResultParser_29e8325d - INFO - Initialized tokenizers: {'Qwen/Qwen3-0.6B': {'class': 'Qwen2Tokenizer', 'name_or_path': 'Qwen/Qwen3-0.6B'}} in 3.33 seconds
+2026-09-19 14:55:37.101 - dataset_manager - INFO - Tokenizer(s) configured in 3.33 seconds
+2026-09-19 14:55:37.101 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 14:55:38.526 - MemoryMapDatasetBackingStore_08befe9f - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_74582b507872/dataset.dat)
+2026-09-19 14:55:38.528 - MemoryMapDatasetBackingStore_08befe9f - INFO - Data file finalized: 20 conversations, 0.03 MB
+2026-09-19 14:55:38.529 - MemoryMapDatasetBackingStore_08befe9f - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_74582b507872/index.dat
+2026-09-19 14:55:38.529 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_74582b507872/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_74582b507872/index.dat') conversation_count=20 total_size_bytes=28271 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 14:55:38.529 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 20, unique turn count: 20
+2026-09-19 14:55:38.529 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 14:55:38.535 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 14:55:38.546 - PhaseOrchestrator_00916f14 - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 14:55:38.606 - dataset_manager - INFO - Dataset client initialized and freed 20 conversations from memory
+2026-09-19 14:55:38.606 - dataset_manager - INFO - Dataset configured in 1.51 seconds
+2026-09-19 14:55:38.607 - system_controller - INFO - All services configured in 4.85 seconds
+2026-09-19 14:55:38.607 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 14:55:38.608 - system_controller - INFO - All services started profiling successfully
+2026-09-19 14:55:38.608 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 14:55:38.610 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 14:55:38.610 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 20 requests
+2026-09-19 14:55:38.610 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 14:56:40.013 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=20, completed=19, in_flight=1 | sessions: sent=20, completed=19
+2026-09-19 14:56:40.015 - records_manager - INFO - Sent 20 requests. Waiting for all to complete...
+2026-09-19 14:56:43.438 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=20, cancelled=0, errors=0 | sessions: completed=20, cancelled=0 | elapsed=64.83s
+2026-09-19 14:56:43.439 - PhaseOrchestrator_00916f14 - NOTICE - All credits completed
+2026-09-19 14:56:43.440 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789854938610158000, sent_end_ns=1789855000013645000, requests_end_ns=1789855003438082000, baseline_start_ns=1789854938610150000, baseline_end_ns=1789855003438107000, total_expected_requests=20, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=20, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=19, error_records=0)
+2026-09-19 14:56:43.440 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 19 of 20 records processed)...
+2026-09-19 14:56:43.441 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 14:56:43.443 - records_manager - INFO - Processed 20 valid requests and 0 errors (20 total).
+2026-09-19 14:56:43.444 - records_manager - INFO - Received all records, processing now...
+2026-09-19 14:56:43.446 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 14:56:43.451 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 14:56:45.438 - records_manager - INFO - Processing records results...
+2026-09-19 14:56:45.456 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 14:56:45.457 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 14:56:46.219 - ExporterManager - INFO - Exporting all records
+2026-09-19 14:56:46.337 - ExporterManager - INFO - Exporting console data
+2026-09-19 14:59:08.837 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 14:59:08.882 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 14:59:08.938 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 14:59:08.965 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 14:59:08.986 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 14:59:09.073 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 14:59:09.225 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 14:59:09.225 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 14:59:09.226 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 14:59:09.227 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 14:59:09.242 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 14:59:09.244 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 14:59:09.244 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 14:59:09.245 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 14:59:09.245 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 14:59:09.245 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 14:59:09.669 - system_controller - INFO - Registered Worker (id: 'worker_544977a0')
+2026-09-19 14:59:09.727 - system_controller - INFO - Registered Record Processor (id: 'record_processor_2374910e')
+2026-09-19 14:59:11.016 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:59:11.019 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 14:59:11.047 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 14:59:11.159 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:59:11.187 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 14:59:11.294 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 14:59:11.430 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 14:59:11.795 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 14:59:11.800 - dataset_manager - INFO - Tokenizer(s) configured in 2.57 seconds
+2026-09-19 14:59:11.800 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 14:59:12.230 - MemoryMapDatasetBackingStore_61efd2cd - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_b73596081b95/dataset.dat)
+2026-09-19 14:59:12.235 - MemoryMapDatasetBackingStore_61efd2cd - INFO - Data file finalized: 100 conversations, 0.13 MB
+2026-09-19 14:59:12.235 - MemoryMapDatasetBackingStore_61efd2cd - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_b73596081b95/index.dat
+2026-09-19 14:59:12.235 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_b73596081b95/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_b73596081b95/index.dat') conversation_count=100 total_size_bytes=141349 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 14:59:12.236 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 14:59:12.237 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 14:59:12.247 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 14:59:12.252 - PhaseOrchestrator_6165a486 - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 14:59:12.307 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 14:59:12.307 - dataset_manager - INFO - Dataset configured in 0.51 seconds
+2026-09-19 14:59:12.308 - system_controller - INFO - All services configured in 3.08 seconds
+2026-09-19 14:59:12.308 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 14:59:12.309 - system_controller - INFO - All services started profiling successfully
+2026-09-19 14:59:12.309 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 14:59:12.311 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 14:59:12.312 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 14:59:12.312 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 14:59:17.365 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:59:17.396 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 14:59:17.508 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 14:59:17.538 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 14:59:17.720 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 14:59:17.820 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 14:59:18.252 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:05:38.882 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 15:05:38.888 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 15:05:42.251 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=389.94s
+2026-09-19 15:05:42.252 - PhaseOrchestrator_6165a486 - NOTICE - All credits completed
+2026-09-19 15:05:42.252 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789855152312058000, sent_end_ns=1789855538882595000, requests_end_ns=1789855542250798000, baseline_start_ns=1789855152312048000, baseline_end_ns=1789855542250834000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 15:05:42.253 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 15:05:42.253 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:05:42.255 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 15:05:42.255 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:05:42.256 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:05:42.258 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:05:44.252 - records_manager - INFO - Processing records results...
+2026-09-19 15:05:44.289 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:05:44.290 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:05:45.102 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:05:45.289 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:06:48.515 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:06:48.567 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:06:48.584 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:06:48.595 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:06:48.626 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:06:48.795 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:06:48.905 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:06:48.905 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:06:48.906 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:06:48.907 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:06:48.919 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:06:48.919 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 15:06:48.920 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:06:48.922 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:06:48.923 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:06:48.923 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:06:49.480 - system_controller - INFO - Registered Record Processor (id: 'record_processor_b2982b8c')
+2026-09-19 15:06:49.519 - system_controller - INFO - Registered Worker (id: 'worker_80a3c160')
+2026-09-19 15:06:50.598 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:06:50.600 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:06:50.624 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:06:50.826 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:06:50.856 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:06:50.967 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:06:51.074 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:06:51.449 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:06:51.453 - dataset_manager - INFO - Tokenizer(s) configured in 2.55 seconds
+2026-09-19 15:06:51.453 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:06:51.891 - MemoryMapDatasetBackingStore_d0629ab9 - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_d26b343470f1/dataset.dat)
+2026-09-19 15:06:51.896 - MemoryMapDatasetBackingStore_d0629ab9 - INFO - Data file finalized: 100 conversations, 0.29 MB
+2026-09-19 15:06:51.897 - MemoryMapDatasetBackingStore_d0629ab9 - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_d26b343470f1/index.dat
+2026-09-19 15:06:51.897 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_d26b343470f1/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_d26b343470f1/index.dat') conversation_count=100 total_size_bytes=307392 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:06:51.898 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 15:06:51.898 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:06:51.907 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 15:06:51.914 - PhaseOrchestrator_7898e81a - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:06:51.969 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 15:06:51.969 - dataset_manager - INFO - Dataset configured in 0.52 seconds
+2026-09-19 15:06:51.970 - system_controller - INFO - All services configured in 3.06 seconds
+2026-09-19 15:06:51.970 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:06:51.971 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:06:51.971 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:06:51.973 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:06:51.973 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 15:06:51.974 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:06:57.442 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:06:57.443 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:06:57.559 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:06:57.659 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:06:57.681 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:06:57.785 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:06:57.889 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:06:58.283 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:12:37.889 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 15:12:37.891 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 15:12:41.634 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=349.66s
+2026-09-19 15:12:41.635 - PhaseOrchestrator_7898e81a - NOTICE - All credits completed
+2026-09-19 15:12:41.636 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789855611973867000, sent_end_ns=1789855957889627000, requests_end_ns=1789855961633829000, baseline_start_ns=1789855611973855000, baseline_end_ns=1789855961633869000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 15:12:41.636 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 15:12:41.637 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:12:41.639 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:12:41.640 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 15:12:41.640 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:12:41.643 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:12:43.634 - records_manager - INFO - Processing records results...
+2026-09-19 15:12:43.668 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:12:43.670 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:12:44.443 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:12:44.554 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:13:44.447 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:13:44.510 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:13:44.510 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:13:44.543 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:13:44.593 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:13:44.691 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:13:44.798 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:13:44.799 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:13:44.801 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:13:44.802 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:13:44.814 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:13:44.814 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 15:13:44.815 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:13:44.817 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:13:44.818 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:13:44.818 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:13:45.356 - system_controller - INFO - Registered Worker (id: 'worker_83e5265a')
+2026-09-19 15:13:45.417 - system_controller - INFO - Registered Record Processor (id: 'record_processor_1450f1d5')
+2026-09-19 15:13:46.621 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:13:46.624 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:13:46.651 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:13:46.769 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:13:46.798 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:13:46.909 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:13:47.017 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:13:47.385 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:13:47.395 - dataset_manager - INFO - Tokenizer(s) configured in 2.59 seconds
+2026-09-19 15:13:47.395 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:13:47.863 - MemoryMapDatasetBackingStore_861194ad - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_fc75803af9c8/dataset.dat)
+2026-09-19 15:13:47.869 - MemoryMapDatasetBackingStore_861194ad - INFO - Data file finalized: 100 conversations, 0.93 MB
+2026-09-19 15:13:47.870 - MemoryMapDatasetBackingStore_861194ad - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_fc75803af9c8/index.dat
+2026-09-19 15:13:47.870 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_fc75803af9c8/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_fc75803af9c8/index.dat') conversation_count=100 total_size_bytes=973684 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:13:47.871 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 15:13:47.871 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:13:47.877 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 15:13:47.887 - PhaseOrchestrator_e4379f05 - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:13:47.943 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 15:13:47.943 - dataset_manager - INFO - Dataset configured in 0.55 seconds
+2026-09-19 15:13:47.944 - system_controller - INFO - All services configured in 3.14 seconds
+2026-09-19 15:13:47.944 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:13:47.945 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:13:47.945 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:13:47.947 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:13:47.947 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 15:13:47.948 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:13:55.745 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:13:55.746 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:13:55.771 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:13:55.924 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:13:55.952 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:13:56.056 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:13:56.162 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:13:56.545 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:22:55.350 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 15:22:55.404 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 15:22:55.545 - EventLoopMonitor - WARNING - Event loop for timing_manager is taking too long to run. Overhead: 71.59ms
+2026-09-19 15:23:01.115 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=553.16s
+2026-09-19 15:23:01.119 - PhaseOrchestrator_e4379f05 - NOTICE - All credits completed
+2026-09-19 15:23:01.123 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789856027947894000, sent_end_ns=1789856575339835000, requests_end_ns=1789856581107010000, baseline_start_ns=1789856027947888000, baseline_end_ns=1789856581107923000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 15:23:01.123 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 15:23:01.123 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:23:01.129 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:23:01.132 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 15:23:01.132 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:23:01.148 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:23:03.108 - records_manager - INFO - Processing records results...
+2026-09-19 15:23:03.156 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:23:03.171 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:23:03.658 - MultiProcessServiceManager_a28c5651 - WARNING - Service dataset_manager process (pid: 1257) still alive after bus shutdown grace; killing (SIGKILL / TerminateProcess — children ignore SIGTERM)
+2026-09-19 15:23:03.658 - MultiProcessServiceManager_a28c5651 - WARNING - Service record_processor process (pid: 1264) still alive after bus shutdown grace; killing (SIGKILL / TerminateProcess — children ignore SIGTERM)
+2026-09-19 15:23:03.963 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:23:04.108 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:24:15.745 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:24:15.784 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:24:15.842 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:24:15.843 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:24:15.911 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:24:16.088 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:24:16.092 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:24:16.092 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:24:16.092 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:24:16.093 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:24:16.108 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:24:16.109 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:24:16.110 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:24:16.110 - system_controller - INFO - Waiting for result domains: profile, server_metrics
+2026-09-19 15:24:16.120 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:24:16.120 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:24:16.689 - system_controller - INFO - Registered Record Processor (id: 'record_processor_81a10c72')
+2026-09-19 15:24:16.732 - system_controller - INFO - Registered Worker (id: 'worker_7923f104')
+2026-09-19 15:24:18.108 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:24:18.111 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:24:18.137 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:24:18.291 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:24:18.322 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:24:18.431 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:24:18.536 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:24:18.910 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:24:18.913 - dataset_manager - INFO - Tokenizer(s) configured in 2.82 seconds
+2026-09-19 15:24:18.914 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:24:19.481 - MemoryMapDatasetBackingStore_53c8849c - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_7c566a91cbf0/dataset.dat)
+2026-09-19 15:24:19.489 - MemoryMapDatasetBackingStore_53c8849c - INFO - Data file finalized: 100 conversations, 3.50 MB
+2026-09-19 15:24:19.489 - MemoryMapDatasetBackingStore_53c8849c - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_7c566a91cbf0/index.dat
+2026-09-19 15:24:19.489 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_7c566a91cbf0/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_7c566a91cbf0/index.dat') conversation_count=100 total_size_bytes=3666832 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:24:19.490 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 15:24:19.491 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:24:19.501 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 15:24:19.508 - PhaseOrchestrator_badd5b6e - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:24:19.562 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 15:24:19.562 - dataset_manager - INFO - Dataset configured in 0.65 seconds
+2026-09-19 15:24:19.562 - system_controller - INFO - All services configured in 3.47 seconds
+2026-09-19 15:24:19.562 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:24:19.564 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:24:19.564 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:24:19.566 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:24:19.566 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 15:24:19.567 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:24:43.072 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:24:43.073 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:24:43.102 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:24:43.202 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:24:43.229 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:24:43.332 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:24:43.454 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:24:43.846 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:28:37.576 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.613 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.616 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.618 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.620 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.623 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.625 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.627 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.630 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.635 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.637 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.651 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.653 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.655 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.657 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.658 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.661 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.663 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.665 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.666 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.667 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.669 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.672 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.697 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.712 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.716 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.719 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.722 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.724 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.727 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.734 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.737 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.740 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.744 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.749 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.751 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.753 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.760 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.764 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.766 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.770 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.774 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.777 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.780 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.783 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.785 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.791 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.794 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.798 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.801 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.806 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.808 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.821 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.823 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.825 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.827 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.830 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.832 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.834 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.839 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.846 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.848 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.851 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.855 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.857 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.859 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.863 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.865 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.869 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.875 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.878 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.880 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.883 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.886 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.889 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.894 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.896 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.900 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.905 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.907 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.909 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.912 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.917 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.919 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.922 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.928 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.929 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.933 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.935 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.938 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.940 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.944 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.946 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.948 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.950 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.953 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.955 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.957 - AioHttpClient - ERROR - Error in aiohttp request: ClientConnectorError(ConnectionKey(host='localhost', port=8080, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Connect call failed ('127.0.0.1', 8080)"))
+2026-09-19 15:28:37.973 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 15:28:38.023 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=98 | sessions: completed=100, cancelled=0 | elapsed=258.45s
+2026-09-19 15:28:38.028 - PhaseOrchestrator_badd5b6e - NOTICE - All credits completed
+2026-09-19 15:28:38.022 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 15:28:38.030 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:28:38.042 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789856659566703000, sent_end_ns=1789856917965947000, requests_end_ns=1789856918020377000, baseline_start_ns=1789856659566692000, baseline_end_ns=1789856918020860000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=98, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=1, error_records=99)
+2026-09-19 15:28:38.046 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 100 of 100 records processed)...
+2026-09-19 15:28:38.049 - records_manager - INFO - Processed 1 valid requests and 99 errors (100 total).
+2026-09-19 15:28:38.050 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:28:38.051 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:28:38.065 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:28:40.022 - records_manager - INFO - Processing records results...
+2026-09-19 15:28:40.049 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:28:40.054 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:28:40.552 - MultiProcessServiceManager_863d391a - WARNING - Service dataset_manager process (pid: 1453) still alive after bus shutdown grace; killing (SIGKILL / TerminateProcess — children ignore SIGTERM)
+2026-09-19 15:28:40.840 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:28:40.999 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:32:16.917 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:32:16.954 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:32:16.981 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:32:16.991 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:32:17.090 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:32:17.168 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:32:17.405 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:32:17.405 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:32:17.406 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:32:17.407 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:32:17.420 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:32:17.421 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:32:17.422 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:32:17.422 - system_controller - INFO - Waiting for result domains: profile, server_metrics
+2026-09-19 15:32:17.436 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:32:17.436 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:32:17.830 - system_controller - INFO - Registered Record Processor (id: 'record_processor_4e67ab85')
+2026-09-19 15:32:17.868 - system_controller - INFO - Registered Worker (id: 'worker_cc22f5ad')
+2026-09-19 15:32:18.845 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:32:18.875 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:32:19.076 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:32:19.078 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:32:19.112 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:32:19.224 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:32:19.330 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:32:19.691 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:32:19.695 - dataset_manager - INFO - Tokenizer(s) configured in 2.29 seconds
+2026-09-19 15:32:19.695 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:32:20.135 - MemoryMapDatasetBackingStore_4146befc - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_2dc3f4d25aaa/dataset.dat)
+2026-09-19 15:32:20.137 - MemoryMapDatasetBackingStore_4146befc - INFO - Data file finalized: 20 conversations, 0.69 MB
+2026-09-19 15:32:20.137 - MemoryMapDatasetBackingStore_4146befc - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_2dc3f4d25aaa/index.dat
+2026-09-19 15:32:20.137 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_2dc3f4d25aaa/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_2dc3f4d25aaa/index.dat') conversation_count=20 total_size_bytes=720413 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:32:20.138 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 20, unique turn count: 20
+2026-09-19 15:32:20.138 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:32:20.140 - dataset_manager - INFO - inputs.json file generated in 0.00 seconds
+2026-09-19 15:32:20.153 - PhaseOrchestrator_219f9f32 - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:32:20.208 - dataset_manager - INFO - Dataset client initialized and freed 20 conversations from memory
+2026-09-19 15:32:20.208 - dataset_manager - INFO - Dataset configured in 0.51 seconds
+2026-09-19 15:32:20.208 - system_controller - INFO - All services configured in 2.80 seconds
+2026-09-19 15:32:20.209 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:32:20.210 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:32:20.210 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:32:20.211 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:32:20.211 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 20 requests
+2026-09-19 15:32:20.212 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:32:38.804 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:32:38.832 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:32:39.001 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:32:39.031 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:32:39.135 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:32:39.239 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:32:39.618 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:38:27.989 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=20, completed=19, in_flight=1 | sessions: sent=20, completed=19
+2026-09-19 15:38:28.035 - records_manager - INFO - Sent 20 requests. Waiting for all to complete...
+2026-09-19 15:38:28.274 - EventLoopMonitor - WARNING - Event loop for timing_manager is taking too long to run. Overhead: 60.19ms
+2026-09-19 15:38:45.826 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=20, cancelled=0, errors=0 | sessions: completed=20, cancelled=0 | elapsed=385.61s
+2026-09-19 15:38:45.828 - PhaseOrchestrator_219f9f32 - NOTICE - All credits completed
+2026-09-19 15:38:45.831 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789857140211852000, sent_end_ns=1789857507980875000, requests_end_ns=1789857525819187000, baseline_start_ns=1789857140211845000, baseline_end_ns=1789857525820566000, total_expected_requests=20, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=20, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=19, error_records=0)
+2026-09-19 15:38:45.832 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 19 of 20 records processed)...
+2026-09-19 15:38:45.832 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:38:45.835 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:38:45.846 - records_manager - INFO - Processed 20 valid requests and 0 errors (20 total).
+2026-09-19 15:38:45.846 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:38:45.862 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:38:47.820 - records_manager - INFO - Processing records results...
+2026-09-19 15:38:47.848 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:38:47.860 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:38:48.351 - MultiProcessServiceManager_965f8e69 - WARNING - Service dataset_manager process (pid: 1630) still alive after bus shutdown grace; killing (SIGKILL / TerminateProcess — children ignore SIGTERM)
+2026-09-19 15:38:48.351 - MultiProcessServiceManager_965f8e69 - WARNING - Service record_processor process (pid: 1637) still alive after bus shutdown grace; killing (SIGKILL / TerminateProcess — children ignore SIGTERM)
+2026-09-19 15:38:48.655 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:38:48.803 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:40:11.559 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:40:11.572 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:40:11.572 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:40:11.591 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:40:11.592 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:40:11.905 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:40:11.914 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:40:11.914 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:40:11.915 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:40:11.915 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:40:11.929 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:40:11.931 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:40:11.931 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 15:40:11.932 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:40:11.933 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:40:11.933 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:40:12.514 - system_controller - INFO - Registered Record Processor (id: 'record_processor_3ea5e457')
+2026-09-19 15:40:12.557 - system_controller - INFO - Registered Worker (id: 'worker_14c8c6e0')
+2026-09-19 15:40:13.758 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:40:13.760 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:40:13.787 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:40:13.902 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:40:13.930 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:40:14.108 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:40:14.216 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:40:14.628 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:40:14.633 - dataset_manager - INFO - Tokenizer(s) configured in 2.72 seconds
+2026-09-19 15:40:14.633 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:40:15.067 - MemoryMapDatasetBackingStore_40fa5a53 - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_469079d1c8e2/dataset.dat)
+2026-09-19 15:40:15.072 - MemoryMapDatasetBackingStore_40fa5a53 - INFO - Data file finalized: 100 conversations, 0.14 MB
+2026-09-19 15:40:15.072 - MemoryMapDatasetBackingStore_40fa5a53 - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_469079d1c8e2/index.dat
+2026-09-19 15:40:15.072 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_469079d1c8e2/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_469079d1c8e2/index.dat') conversation_count=100 total_size_bytes=141845 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:40:15.073 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 15:40:15.073 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:40:15.079 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 15:40:15.089 - PhaseOrchestrator_9050c49e - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:40:15.142 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 15:40:15.142 - dataset_manager - INFO - Dataset configured in 0.51 seconds
+2026-09-19 15:40:15.143 - system_controller - INFO - All services configured in 3.23 seconds
+2026-09-19 15:40:15.143 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:40:15.144 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:40:15.144 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:40:15.147 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:40:15.147 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 15:40:15.148 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:40:21.142 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:40:21.171 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:40:21.280 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:40:21.310 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:40:21.449 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:40:21.553 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:40:21.969 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:45:24.076 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 15:45:24.078 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 15:45:27.443 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=312.30s
+2026-09-19 15:45:27.444 - PhaseOrchestrator_9050c49e - NOTICE - All credits completed
+2026-09-19 15:45:27.444 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789857615147307000, sent_end_ns=1789857924076445000, requests_end_ns=1789857927443410000, baseline_start_ns=1789857615147300000, baseline_end_ns=1789857927443425000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 15:45:27.444 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 15:45:27.444 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:45:27.446 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:45:27.446 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 15:45:27.446 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:45:27.447 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:45:29.445 - records_manager - INFO - Processing records results...
+2026-09-19 15:45:29.471 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:45:29.472 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:45:30.297 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:45:30.394 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:46:56.640 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:46:56.653 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:46:56.655 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:46:56.662 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:46:56.702 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:46:56.763 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:46:57.093 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:46:57.093 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:46:57.094 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:46:57.095 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:46:57.100 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:46:57.100 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 15:46:57.107 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:46:57.108 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:46:57.109 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:46:57.109 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:46:57.544 - system_controller - INFO - Registered Record Processor (id: 'record_processor_caf810e6')
+2026-09-19 15:46:57.588 - system_controller - INFO - Registered Worker (id: 'worker_704b166a')
+2026-09-19 15:46:58.221 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:46:58.223 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:46:58.251 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:46:58.440 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:46:58.468 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:46:58.580 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:46:58.690 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:46:59.031 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:46:59.035 - dataset_manager - INFO - Tokenizer(s) configured in 1.94 seconds
+2026-09-19 15:46:59.035 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:46:59.446 - MemoryMapDatasetBackingStore_0a7889f2 - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_6473149b7242/dataset.dat)
+2026-09-19 15:46:59.451 - MemoryMapDatasetBackingStore_0a7889f2 - INFO - Data file finalized: 100 conversations, 0.29 MB
+2026-09-19 15:46:59.451 - MemoryMapDatasetBackingStore_0a7889f2 - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_6473149b7242/index.dat
+2026-09-19 15:46:59.452 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_6473149b7242/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_6473149b7242/index.dat') conversation_count=100 total_size_bytes=307345 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:46:59.452 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 15:46:59.453 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:46:59.455 - dataset_manager - INFO - inputs.json file generated in 0.00 seconds
+2026-09-19 15:46:59.468 - PhaseOrchestrator_208822ab - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:46:59.522 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 15:46:59.522 - dataset_manager - INFO - Dataset configured in 0.49 seconds
+2026-09-19 15:46:59.523 - system_controller - INFO - All services configured in 2.43 seconds
+2026-09-19 15:46:59.523 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:46:59.524 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:46:59.524 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:46:59.526 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:46:59.526 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 15:46:59.527 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:47:04.250 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:47:04.251 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:47:04.276 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:47:04.382 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:47:04.411 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:47:04.515 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:47:04.634 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:47:05.045 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:52:43.114 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 15:52:43.115 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 15:52:46.864 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=347.34s
+2026-09-19 15:52:46.865 - PhaseOrchestrator_208822ab - NOTICE - All credits completed
+2026-09-19 15:52:46.866 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789858019526786000, sent_end_ns=1789858363113972000, requests_end_ns=1789858366864461000, baseline_start_ns=1789858019526780000, baseline_end_ns=1789858366864482000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 15:52:46.866 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 15:52:46.866 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 15:52:46.869 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 15:52:46.870 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 15:52:46.870 - records_manager - INFO - Received all records, processing now...
+2026-09-19 15:52:46.872 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 15:52:48.865 - records_manager - INFO - Processing records results...
+2026-09-19 15:52:48.897 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 15:52:48.897 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 15:52:49.723 - ExporterManager - INFO - Exporting all records
+2026-09-19 15:52:49.821 - ExporterManager - INFO - Exporting console data
+2026-09-19 15:53:48.904 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 15:53:48.904 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 15:53:48.934 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 15:53:48.967 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 15:53:48.990 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 15:53:49.083 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 15:53:49.364 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 15:53:49.364 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 15:53:49.365 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 15:53:49.365 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 15:53:49.370 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 15:53:49.370 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 15:53:49.377 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 15:53:49.379 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 15:53:49.379 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 15:53:49.379 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 15:53:49.747 - system_controller - INFO - Registered Record Processor (id: 'record_processor_d744414a')
+2026-09-19 15:53:49.785 - system_controller - INFO - Registered Worker (id: 'worker_8cb0ff6d')
+2026-09-19 15:53:50.977 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:53:50.978 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:53:51.008 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:53:51.119 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:53:51.147 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:53:51.255 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:53:51.364 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:53:51.716 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 15:53:51.721 - dataset_manager - INFO - Tokenizer(s) configured in 2.36 seconds
+2026-09-19 15:53:51.721 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 15:53:52.169 - MemoryMapDatasetBackingStore_89373dfd - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_03d07fa9d94b/dataset.dat)
+2026-09-19 15:53:52.175 - MemoryMapDatasetBackingStore_89373dfd - INFO - Data file finalized: 100 conversations, 0.93 MB
+2026-09-19 15:53:52.175 - MemoryMapDatasetBackingStore_89373dfd - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_03d07fa9d94b/index.dat
+2026-09-19 15:53:52.175 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_03d07fa9d94b/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_03d07fa9d94b/index.dat') conversation_count=100 total_size_bytes=973176 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 15:53:52.176 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 15:53:52.177 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 15:53:52.185 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 15:53:52.192 - PhaseOrchestrator_a16bdb31 - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 15:53:52.252 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 15:53:52.252 - dataset_manager - INFO - Dataset configured in 0.53 seconds
+2026-09-19 15:53:52.253 - system_controller - INFO - All services configured in 2.89 seconds
+2026-09-19 15:53:52.253 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 15:53:52.254 - system_controller - INFO - All services started profiling successfully
+2026-09-19 15:53:52.254 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 15:53:52.256 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 15:53:52.256 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 15:53:52.257 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 15:53:58.979 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:53:58.980 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 15:53:59.007 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 15:53:59.108 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 15:53:59.134 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 15:53:59.237 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 15:53:59.366 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 15:53:59.719 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 16:02:44.122 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 16:02:44.124 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 16:02:49.812 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=537.56s
+2026-09-19 16:02:49.812 - PhaseOrchestrator_a16bdb31 - NOTICE - All credits completed
+2026-09-19 16:02:49.813 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789858432256409000, sent_end_ns=1789858964122131000, requests_end_ns=1789858969811822000, baseline_start_ns=1789858432256402000, baseline_end_ns=1789858969811867000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 16:02:49.814 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 16:02:49.814 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 16:02:49.817 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 16:02:49.822 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 16:02:49.822 - records_manager - INFO - Received all records, processing now...
+2026-09-19 16:02:49.825 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 16:02:51.813 - records_manager - INFO - Processing records results...
+2026-09-19 16:02:51.837 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 16:02:51.837 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 16:02:52.579 - ExporterManager - INFO - Exporting all records
+2026-09-19 16:02:52.675 - ExporterManager - INFO - Exporting console data
+2026-09-19 16:12:55.764 - system_controller - INFO - Registered Timing Manager (id: 'timing_manager')
+2026-09-19 16:12:55.769 - system_controller - INFO - Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager')
+2026-09-19 16:12:55.784 - system_controller - INFO - Registered Worker Manager (id: 'worker_manager')
+2026-09-19 16:12:55.793 - system_controller - INFO - Registered Server Metrics Manager (id: 'server_metrics_manager')
+2026-09-19 16:12:55.839 - system_controller - INFO - Registered Dataset Manager (id: 'dataset_manager')
+2026-09-19 16:12:55.999 - system_controller - INFO - Registered Records Manager (id: 'records_manager')
+2026-09-19 16:12:56.112 - system_controller - INFO - AIPerf System is CONFIGURING
+2026-09-19 16:12:56.113 - system_controller - INFO - Configuring all services to start profiling
+2026-09-19 16:12:56.114 - timing_manager - INFO - Waiting for dataset to be configured before configuring timing
+2026-09-19 16:12:56.115 - dataset_manager - INFO - Configuring tokenizer(s) for dataset manager
+2026-09-19 16:12:56.127 - system_controller - INFO - Server metrics disabled - no Prometheus endpoints reachable
+2026-09-19 16:12:56.127 - system_controller - INFO - Waiting for result domains: profile, telemetry
+2026-09-19 16:12:56.130 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9400/metrics is not reachable
+2026-09-19 16:12:56.131 - gpu_telemetry_manager - WARNING - GPU Telemetry: http://localhost:9401/metrics is not reachable
+2026-09-19 16:12:56.132 - system_controller - INFO - DCGM telemetry skipped: no telemetry sources reachable
+2026-09-19 16:12:56.132 - system_controller - INFO - Waiting for result domains: profile
+2026-09-19 16:12:56.599 - system_controller - INFO - Registered Worker (id: 'worker_71f18fd3')
+2026-09-19 16:12:56.660 - system_controller - INFO - Registered Record Processor (id: 'record_processor_b3a2f7c0')
+2026-09-19 16:12:57.840 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 16:12:57.868 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 16:12:57.982 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 16:12:57.984 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 16:12:58.010 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 16:12:58.191 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 16:12:58.305 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 16:12:58.712 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 16:12:58.718 - dataset_manager - INFO - Tokenizer(s) configured in 2.60 seconds
+2026-09-19 16:12:58.718 - dataset_manager - INFO - Configuring dataset for dataset_manager
+2026-09-19 16:12:59.153 - MemoryMapDatasetBackingStore_6e2c722d - INFO - Memory-mapped backing store initialized (streaming to /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_681429ab56ea/dataset.dat)
+2026-09-19 16:12:59.158 - MemoryMapDatasetBackingStore_6e2c722d - INFO - Data file finalized: 100 conversations, 0.29 MB
+2026-09-19 16:12:59.159 - MemoryMapDatasetBackingStore_6e2c722d - INFO - Index file created: /var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_681429ab56ea/index.dat
+2026-09-19 16:12:59.159 - dataset_manager - INFO - Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_681429ab56ea/dataset.dat') index_file_path=PosixPath('/var/folders/pj/s5trthkd6qb82d2g1vryt_nw0000gn/T/aiperf_mmap_681429ab56ea/index.dat') conversation_count=100 total_size_bytes=307655 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0
+2026-09-19 16:12:59.160 - dataset_manager - INFO - sampling strategy: sequential, unique conversations: 100, unique turn count: 100
+2026-09-19 16:12:59.161 - dataset_manager - INFO - Generating inputs.json file at /Users/dinisha/mlx-inference-bench/artifacts/Qwen_Qwen3-0.6B-openai-chat-concurrency1/inputs.json
+2026-09-19 16:12:59.167 - dataset_manager - INFO - inputs.json file generated in 0.01 seconds
+2026-09-19 16:12:59.176 - PhaseOrchestrator_326986da - INFO - Initialized 1 phase(s): ['Profiling']
+2026-09-19 16:12:59.230 - dataset_manager - INFO - Dataset client initialized and freed 100 conversations from memory
+2026-09-19 16:12:59.230 - dataset_manager - INFO - Dataset configured in 0.51 seconds
+2026-09-19 16:12:59.230 - system_controller - INFO - All services configured in 3.12 seconds
+2026-09-19 16:12:59.230 - system_controller - INFO - AIPerf System is CONFIGURED
+2026-09-19 16:12:59.232 - system_controller - INFO - All services started profiling successfully
+2026-09-19 16:12:59.232 - system_controller - INFO - AIPerf System is PROFILING
+2026-09-19 16:12:59.234 - RateTiming - INFO - Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None
+2026-09-19 16:12:59.234 - PhaseRunner - NOTICE - Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 100 requests
+2026-09-19 16:12:59.235 - records_manager - INFO - Credit phase start: profiling
+2026-09-19 16:13:04.307 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 16:13:04.308 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-19 16:13:04.337 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f5c3703b78ae2a478ae15b247e9f855e0ce2107b%22 "HTTP/1.1 200 OK"
+2026-09-19 16:13:04.484 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-09-19 16:13:04.515 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-0.6B/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer_config.json?%2FQwen%2FQwen3-0.6B%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22417d038a63fa3de29cfde265caedae14d1a58d92%22 "HTTP/1.1 200 OK"
+2026-09-19 16:13:04.620 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-09-19 16:13:04.731 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-09-19 16:13:05.106 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-0.6B "HTTP/1.1 200 OK"
+2026-09-19 16:18:42.671 - PhaseRunner - NOTICE - Phase profiling (profiling) sending complete | sent=100, completed=99, in_flight=1 | sessions: sent=100, completed=99
+2026-09-19 16:18:42.672 - records_manager - INFO - Sent 100 requests. Waiting for all to complete...
+2026-09-19 16:18:46.401 - PhaseRunner - NOTICE - Phase profiling (profiling) complete | completed=100, cancelled=0, errors=0 | sessions: completed=100, cancelled=0 | elapsed=347.17s
+2026-09-19 16:18:46.402 - PhaseOrchestrator_326986da - NOTICE - All credits completed
+2026-09-19 16:18:46.402 - records_manager - INFO - Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1789859579234562000, sent_end_ns=1789859922671208000, requests_end_ns=1789859926401186000, baseline_start_ns=1789859579234555000, baseline_end_ns=1789859926401192000, total_expected_requests=100, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=100, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=99, error_records=0)
+2026-09-19 16:18:46.403 - records_manager - NOTICE - All requests have completed, please wait for the results to be processed (currently 99 of 100 records processed)...
+2026-09-19 16:18:46.403 - records_manager - INFO - All credits complete, please wait for the results to be processed...
+2026-09-19 16:18:46.406 - system_controller - INFO - Received credits complete from 'timing_manager'
+2026-09-19 16:18:46.407 - records_manager - INFO - Processed 100 valid requests and 0 errors (100 total).
+2026-09-19 16:18:46.408 - records_manager - INFO - Received all records, processing now...
+2026-09-19 16:18:46.409 - records_manager - INFO - Waiting 2.0s for server metrics flush period...
+2026-09-19 16:18:48.403 - records_manager - INFO - Processing records results...
+2026-09-19 16:18:48.440 - system_controller - INFO - All results received, initiating shutdown
+2026-09-19 16:18:48.441 - records_manager - INFO - _finalize_and_process_results completed
+2026-09-19 16:18:49.201 - ExporterManager - INFO - Exporting all records
+2026-09-19 16:18:49.270 - ExporterManager - INFO - Exporting console data

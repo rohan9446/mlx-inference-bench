@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+
+# HF model cache, if it ever lands inside the project
+.cache/
+models/
+
+.DS_Store
