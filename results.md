@@ -440,10 +440,9 @@ export for `cache10_isl8192` (§8.8).
 
 ---
 
-## 10. Next
+## 10. Open questions
 
-This machine is not available for further collection, so the following are open
-questions rather than planned work.
+Left to future work, listed so the gaps are explicit rather than implied.
 
 1. A shuffled ISL sweep, to separate context length from session drift (§8.9).
 2. Page-in counters alongside `vm.swapusage`, to establish whether the §3
