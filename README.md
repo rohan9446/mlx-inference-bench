@@ -87,17 +87,9 @@ figures/             rendered plots
 artifacts/           earlier round, superseded — see results.md
 ```
 
-## Next
+## Open questions
 
-This machine is not available for further collection, so these are open
-questions rather than planned work.
-
-1. A shuffled ISL sweep, to separate context length from session drift.
-2. Page-in counters alongside `vm.swapusage`, to establish whether the falloff
-   at 8,192 is attention cost or paging.
-3. Per-request TTFT distributions from the committed `profile_export.jsonl`, to
-   test the batching interpretation in §5.1. Needs no hardware.
-4. Any future platform: pinned seed and model revision, an explicit thinking
-   setting verified in the rendered payload, `--artifact-dir` per configuration,
-   and a single-request dry run before any sweep.
-   
+Listed in [`results.md`](results.md) §10, with the measurements that motivate
+each one. The nearest of them needs no hardware: the per-request TTFT
+distributions in `results_parity/*/profile_export.jsonl` would test the batching
+interpretation in §5.1 directly.
